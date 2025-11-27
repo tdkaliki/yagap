@@ -1,0 +1,1 @@
+augustus --uniqueGeneId=true --species=Bluey2 --hintsfile=Augustus_hints.gff --extrinsicCfgFile=my_extrinsic.cfg --exonnames=on --codingseq=on --allow_hinted_splicesites=gcag,atac --alternatives-from-evidence=false --softmasking=true --gff3=on Genome.sm.fasta_part_${SGE_TASK_ID} > Genome_sm_part_${SGE_TASK_ID}.aug.out
