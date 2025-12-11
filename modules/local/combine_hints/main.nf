@@ -1,1 +1,16 @@
-cat ../Sequence_Mapping/RNA_mapping/Mikado/RNA_hints.gff ../Sequence_Mapping/RNA_mapping/Portcullis/intron_hints.gff ../Sequence_Mapping/Protein_mapping/protein_hints.gff > ./Augustus_hints.gff
+process COMBINE_MIKADO_LIST{
+    label 'combine_mikado_lists'
+    
+    input:
+        tuple val(meta_info), path (hints)
+    output:
+        tuple val("Augustus_hints"), path ("Augustus_hints.gff") ,emit:augustus_hints
+    script:
+        """
+        cat *.gff > Augustus_hints.gff
+        """
+    stub:
+        """
+        touch Augustus_hints.gff
+        """    
+}

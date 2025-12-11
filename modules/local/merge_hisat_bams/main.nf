@@ -1,1 +1,0 @@
-samtools merge -@ 20 -o All.hisat2.merged.sorted.bam Bell_1.hisat2.sorted.bam Bell_2.hisat2.sorted.bam Dacto_1.hisat2.sorted.bam Dacto_2.hisat2.sorted.bam Gastro_1.hisat2.sorted.bam Gastro_2.hisat2.sorted.bam Gono_1.hisat2.sorted.bam Gono_2.hisat2.sorted.bam Polyp_1.hisat2.sorted.bam Polyp_2.hisat2.sorted.bam Whole_1.hisat2.sorted.bam Whole_2.hisat2.sorted.bam
