@@ -1,9 +1,9 @@
-include { AUGUSTUS_TRAINING } from '../modules/local/augustus_training/main'
-include { AUGUSTUS_RUN } from '../modules/local/augustus_run/main'
-include { SPLIT_GENOME } from '../modules/local/split_genome/main'
-include { COMBINE_AUGUSTUS } from '../modules/local/combine_augustus/main'
+include { AUGUSTUS_TRAINING } from '../../modules/local/augustus_training/main'
+include { AUGUSTUS_RUN } from '../../modules/local/augustus_run/main'
+include { SPLIT_GENOME } from '../../modules/local/split_genome/main'
+include { COMBINE_AUGUSTUS } from '../../modules/local/combine_augustus/main'
 
-workflow MIKADO_RUN {
+workflow AUGUSTUS_ANNOTATION {
     take:
         genome
 		training_set
@@ -15,7 +15,7 @@ workflow MIKADO_RUN {
         ch_versions = ch_versions.mix(AUGUSTUS_TRAINING.out.versions)
         SPLIT_GENOME(genome, N)
         ch_versions = ch_versions.mix(SPLIT_GENOME.out.versions)
-        genome_chunks = SPLIT_GENOME.out.genome_chunks
+        genome_chunks = SPLIT_GENOME.out.genome_chunks.flatten()
         .flatten()
         .map { chunk_file ->
             def chunk_id = chunk_file.name.replaceAll(/.*_part_(\d+)$/, '$1')

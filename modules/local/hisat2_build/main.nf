@@ -7,7 +7,6 @@ process HISAT2_BUILD{
         path "${genome.baseName}.hisat2_index" ,emit:hisat2_index
         path "versions.yml", emit: versions
     script:
-        new_meta_info = "hisat2_index"
         """
         hisat2-build ${genome} ${genome.baseName}.hisat2_index
 

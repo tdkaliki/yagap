@@ -17,8 +17,7 @@ process SPLIT_GENOME {
             ls -1 ${genome_fasta}_chunk_* > GENOME_CHUNKS.txt
     
             i="1"
-            while [ \$i -lt $((${N}+1)) ]
-            do
+            for i in \$(seq 1 ${N}); do
                 file=\$(head -n \$i GENOME_CHUNKS.txt | tail -n 1)
                 mv \$file ${genome_fasta.baseName}_part_"\$i" &
                 i=\$[\$i+1]
@@ -34,7 +33,8 @@ process SPLIT_GENOME {
         """
     stub:
         """
-        for i in $(seq 1 \${N}); do
+        i="1"
+        for i in \$(seq 1 ${N}); do
             touch ${genome_fasta.baseName}_part_\${i}
         done
         touch versions.yml

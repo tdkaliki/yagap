@@ -4,9 +4,8 @@ process COMBINE_MIKADO_LIST{
     input:
         tuple val(meta_info), path (lists)
     output:
-        tuple val(new_meta_info), path ("mikado_list.txt") ,emit:mikado_list
+        tuple val("mikado_list"), path ("mikado_list.txt") ,emit:mikado_list
     script:
-        new_meta_info = "mikado_list"
         """
         cat *.txt > mikado_list.txt
         """

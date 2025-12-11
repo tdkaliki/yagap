@@ -10,7 +10,6 @@ process GMAP_MAPPING{
         tuple val(sample_id), path("${sample_id}.gff3"),emit:gff
         path "versions.yml", emit: versions
     script:
-        new_meta_info = "hisat2_index"
         """
         gmap -D ${gmapdb} -d ${genomedb} -f 3 -n 0 -x 50 -t 10 -B 4 --gff3-add-separators=0 ${fasta} > ${sample_id}.gff3
 

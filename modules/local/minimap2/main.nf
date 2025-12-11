@@ -3,7 +3,7 @@ process MINIMAP2_LR_MAPPING{
     
     input:
         tuple val(sample_id), path(lr_file)
-        pasth genome
+        path genome
     output:
         tuple val(sample_id), path("${sample_id}.minimap2.sorted.bam"), path("${sample_id}.minimap2.sorted.bam.bai"), emit:minimap2_bam
         path "versions.yml", emit: versions
@@ -33,7 +33,7 @@ process MINIMAP2_LR{
     
     input:
         tuple val(sample_id), path(lr_file)
-        pasth genome
+        path genome
     output:
         tuple val(sample_id), path("${sample_id}.hisat2.sam"), emit:hisat2_sam
         path "versions.yml", emit: versions
@@ -57,7 +57,7 @@ process MINIMAP2_CDNA_MAPPING{
     
     input:
         tuple val(sample_id), path(lr_file)
-        pasth genome
+        path genome
     output:
         tuple val(sample_id), path("${sample_id}.minimap2.sorted.bam"), path("${sample_id}.minimap2.sorted.bam.bai"), emit:minimap2_bam
         path "versions.yml", emit: versions
@@ -87,7 +87,7 @@ process MINIMAP2_CDNA{
     
     input:
         tuple val(sample_id), path(lr_file)
-        pasth genome
+        path genome
     output:
         tuple val(sample_id), path("${sample_id}.hisat2.sam"), emit:hisat2_sam
         path "versions.yml", emit: versions

@@ -5,14 +5,14 @@ process SAMTOOLS_MERGE {
         tuple val(meta), path(bam_files), path(bai_file)
     
     output:
-        tuple val(meta), path("${meta.id}.merged.bam"), emit: bam
+        tuple val(meta), path("${meta}.merged.bam"), emit: bam
         path "versions.yml", emit: versions
     
     script:
         """
         samtools merge \\
             -@ ${task.cpus} \\
-            -o ${meta.id}.merged.bam \\
+            -o ${meta}.merged.bam \\
             ${bam_files}
     
         cat <<-END_VERSIONS > versions.yml
@@ -22,7 +22,7 @@ process SAMTOOLS_MERGE {
         """
     stub:
         """
-        touch ${meta.id}.merged.bam
+        touch ${meta}.merged.bam
         touch versions.yml
         """
 }

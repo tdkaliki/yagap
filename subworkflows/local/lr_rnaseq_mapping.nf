@@ -1,9 +1,9 @@
-include { MINIMAP2_LR; MINIMAP2_LR_MAPPING} from '../modules/local/hisat2/main'
-include { SAM_TO_BAM } from '../modules/local/sam_to_bam/main'
-include { SAMTOOLS_SORT } from '../modules/local/samtools_sort/main'
-include { SAMTOOLS_INDEX } from '../modules/local/samtools_index/main'
-include { STRINGTIE_MINIMAP } from '../modules/local/stringtie/main'
-include { CREATE_MINIMAP_GTF_LIST } from '../modules/local/make_file_list/main'
+include { MINIMAP2_LR; MINIMAP2_LR_MAPPING} from '../../modules/local/minimap2/main'
+include { SAM_TO_BAM } from '../../modules/local/sam_to_bam/main'
+include { SAMTOOLS_SORT } from '../../modules/local/samtools_sort/main'
+include { SAMTOOLS_INDEX } from '../../modules/local/samtools_index/main'
+include { STRINGTIE_MINIMAP } from '../../modules/local/stringtie/main'
+include { CREATE_MINIMAP_GTF_LIST } from '../../modules/local/make_file_list/main'
 
 workflow LR_RNASEQ_MAPPING {
     take:

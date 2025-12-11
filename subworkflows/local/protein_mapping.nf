@@ -1,8 +1,8 @@
-include { FILTER_PROTEIN } from '../modules/local/filter_protein/main'
-include { MAKE_REF_PROT_DB } from '../modules/local/make_ref_prot_db/main'
-include { METAEUK_DB } from '../modules/local/metaeuk_db/main'
-include { METAEUK_RUN } from '../modules/local/metaeuk_run/main'
-include { FILTER_METAEUK } from '../modules/local/filter_metaeuk/main'
+include { FILTER_PROTEIN } from '../../modules/local/filter_protein/main'
+include { MAKE_REF_PROT_DB } from '../../modules/local/make_ref_prot_db/main'
+include { METAEUK_DB } from '../../modules/local/metaeuk_db/main'
+include { METAEUK_RUN } from '../../modules/local/metaeuk_run/main'
+include { FILTER_METAEUK } from '../../modules/local/filter_metaeuk/main'
 
 workflow PROTEIN_MAPPING {
     take:
@@ -20,7 +20,7 @@ workflow PROTEIN_MAPPING {
         ch_versions = ch_versions.mix(METAEUK_RUN.out.versions)
         FILTER_METAEUK(METAEUK_RUN.out.metaeuk_gff)
         ch_versions = ch_versions.mix(FILTER_METAEUK.out.versions)
-        protein_hints=FILTER_METAEUK.out.FILTER_METAEUK
+        protein_hints=FILTER_METAEUK.out.intron_hints
     emit:
         protein_hints
         versions = ch_versions

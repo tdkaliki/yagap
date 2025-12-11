@@ -4,15 +4,13 @@ include { CDNASEQ_MAPPING } from '../subworkflows/local/cdna_seq_mapping'
 include { LR_RNASEQ_MAPPING } from '../subworkflows/local/lr_rnaseq_mapping'
 include { SR_RNASEQ_MAPPING } from '../subworkflows/local/sr_rnaseq_mapping'
 include { GET_JUNCTIONS } from '../subworkflows/local/junctions'
-include { MIKADO_RUN; MIKADO_RUN as MIKADO_RUN_AFTER_AUGUSTUS } from '../subworkflows/local/mikdao_run'
-include { COMBINE_MIKADO_LIST as COMBINE_MIKADO_LIST1; COMBINE_MIKADO_LIST as COMBINE_MIKADO_LIST2} from '../subworkflows/local/combine_mikado_list'
+include { MIKADO_RUN; MIKADO_RUN as MIKADO_RUN_AFTER_AUGUSTUS } from '../subworkflows/local/mikado_run'
+include { COMBINE_MIKADO_LIST as COMBINE_MIKADO_LIST1; COMBINE_MIKADO_LIST as COMBINE_MIKADO_LIST2} from '../modules/local/combine_mikado_list'
+include { COMBINE_HINTS } from '../modules/local/combine_hints'
 include { AUGUSTUS_ANNOTATION } from '../subworkflows/local/augustus_annotation'
+include { REPEAT_MASKING } from '../subworkflows/local/repeat_masking'
 
 workflow YAGAP {
-    take:
-        mode
-        input_channel
-        vcf_input
     main:
     mikado_gtf_list = Channel.empty()
     augustus_hints = Channel.empty()
@@ -65,7 +63,7 @@ workflow YAGAP {
     mikado_gtf_list = mikado_gtf_list.mix(SR_RNASEQ_MAPPING.out.hisat_list)
     ch_versions = ch_versions.mix(SR_RNASEQ_MAPPING.out.versions)
     ///
-    GET_JUNCTIONS(SR_RNASEQ_MAPPING.out.bam_file, params.genome)
+    GET_JUNCTIONS(SR_RNASEQ_MAPPING.out.hisat_merged_bam, params.genome)
     //GET_JUNCTIONS.out.junctions
     augustus_hints = augustus_hints.mix(GET_JUNCTIONS.out.intron_hints)
     ch_versions = ch_versions.mix(GET_JUNCTIONS.out.versions)
@@ -88,10 +86,10 @@ workflow YAGAP {
     if (params.run_masking) {
         REPEAT_MASKING(params.genome, params.number_of_chunks)
         ch_versions = ch_versions.mix(REPEAT_MASKING.out.versions)
-        genome=REPEAT_MASKING.out.masked_genome
+        genome_sm=REPEAT_MASKING.out.masked_genome
     }
     else{
-        genome=params.genome
+        genome_sm=params.genome
     }
 ///
     if (params.run_augustus){
@@ -111,7 +109,7 @@ workflow YAGAP {
 
         COMBINE_HINTS(augustus_hints)
 
-        AUGUSTUS_ANNOTATION(genome, MIKADO_RUN.out.training_set, COMBINE_HINTS.out.augustus_hints, params.number_of_chunks)
+        AUGUSTUS_ANNOTATION(genome_sm, MIKADO_RUN.out.training_set, COMBINE_HINTS.out.augustus_hints, params.number_of_chunks)
         //AUGUSTUS_ANNOTATION.out.augustus_annotation
         AUGUSTUS_ANNOTATION.out.augustus_for_mikado
         ch_versions = ch_versions.mix(AUGUSTUS_ANNOTATION.out.versions)

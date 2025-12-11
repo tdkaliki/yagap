@@ -1,5 +1,5 @@
-include { PORTCULIS } from '../modules/local/portcullis/main'
-include { JUNCTOOLS } from '../modules/local/junctools/main'
+include { PORTCULIS } from '../../modules/local/portcullis/main'
+include { JUNCTOOLS } from '../../modules/local/junctools/main'
 
 workflow GET_JUNCTIONS {
     take:

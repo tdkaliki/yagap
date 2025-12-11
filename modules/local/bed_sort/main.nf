@@ -5,7 +5,7 @@ process BED_SORT {
         tuple val(meta), path (bed)
     
     output:
-        tuple val(meta), path(${bed.name.replace('.bed', '.sorted.bed')}), emit: sorted_bed
+        tuple val(meta), path("${bed.name.replace('.bed', '.sorted.bed')}"), emit: sorted_bed
         path "versions.yml", emit: versions
     
     script:
@@ -19,7 +19,7 @@ process BED_SORT {
         """
     stub:
         """
-        touch genome.sm.fasta
+        touch ${bed.name.replace('.bed', '.sorted.bed')}
         touch versions.yml
         """    
 }

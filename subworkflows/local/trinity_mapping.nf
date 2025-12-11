@@ -1,6 +1,6 @@
-include { GMAP_BUILD } from '../modules/local/gmap_build/main'
-include { GMAP_MAPPING } from '../modules/local/gmap_mapping/main'
-include { CREATE_GMAP_GFF_LIST } from '../modules/local/make_file_list/main'
+include { GMAP_BUILD } from '../../modules/local/gmap_build/main'
+include { GMAP_MAPPING } from '../../modules/local/gmap_mapping/main'
+include { CREATE_GMAP_GFF_LIST } from '../../modules/local/make_file_list/main'
 
 workflow TRINITY_MAPPING {
     take:

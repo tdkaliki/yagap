@@ -19,7 +19,7 @@ process REPEATMASKER_WITH_MODEL {
         """
     stub:
         """
-        touch test.gff
+        touch ${genome}.gff
         touch versions.yml
         """
 }
@@ -45,7 +45,7 @@ process REPEATMASKER_STANDARD {
         """
     stub:
         """
-        touch test.gff
+        touch ${genome}.gff
         touch versions.yml
         """
 }

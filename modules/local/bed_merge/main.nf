@@ -5,7 +5,7 @@ process BED_MERGE {
         tuple val(meta), path (bed)
     
     output:
-        tuple val(meta), path(${bed.name.replace('.bed', '.merged.bed')}), emit: merged_bed
+        tuple val(meta), path("${bed.name.replace('.bed', '.merged.bed')}"), emit: merged_bed
         path "versions.yml", emit: versions
 
     script:

@@ -1,5 +1,5 @@
-process COMBINE_MIKADO_LIST{
-    label 'combine_mikado_lists'
+process COMBINE_HINTS{
+    label 'combine_hints'
     
     input:
         tuple val(meta_info), path (hints)

@@ -8,7 +8,6 @@ process GMAP_BUILD{
         path "Genome" ,emit:genomedb
         path "versions.yml", emit: versions
     script:
-        new_meta_info = "hisat2_index"
         """
         gmap_build -D gmapdb -d Genome ${genome}
 

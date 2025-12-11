@@ -5,10 +5,9 @@ process PORTCULIS{
         tuple val(meta_info), path(bam_file), path(bai_file)
         path genome
     output:
-        tuple val(new_meta_info), path("portcullis_rezults/3-filt/portcullis_filtered.pass.junctions.bed"),emit:junctions_bed
+        tuple val("portculis_junctions_bed"), path("portcullis_rezults/3-filt/portcullis_filtered.pass.junctions.bed"),emit:junctions_bed
         path "versions.yml", emit: versions
     script:
-        new_meta_info = "portculis_junctions_bed"
         """
         portcullis full -t ${task.cpus} -v --bam_filter --orientation FR -o portcullis_rezults ${genome} ${bam_file}
 

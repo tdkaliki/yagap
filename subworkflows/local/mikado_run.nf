@@ -1,10 +1,9 @@
-include { MIKADO_CONFIGURE; MIKADO_PREPARE; MIKADO_SERIALISE; MIKADO_PICK } from '../modules/local/mikado/main'
-include { DIAMOND } from '../modules/local/diamond/main'
-include { TRANSDECODER } from '../modules/local/transdecoder/main'
-include { METAEUK_RUN } from '../modules/local/metaeuk_run/main'
-include { FILTER_METAEUK } from '../modules/local/filter_metaeuk/main'
-include { MAKE_AUGUSTUS_TRAINING_SET } from '../modules/local/make_augustus_training_set/main'
-include { MAKE_RNA_HINTS } from '../modules/local/make_rna_hints/main'
+include { MIKADO_CONFIGURE; MIKADO_PREPARE; MIKADO_SERIALISE; MIKADO_PICK } from '../../modules/local/mikado/main'
+include { DIAMOND } from '../../modules/local/diamond/main'
+include { TRANSDECODER } from '../../modules/local/transdecoder/main'
+include { METAEUK_RUN } from '../../modules/local/metaeuk_run/main'
+include { MAKE_AUGUSTUS_TRAINING_SET } from '../../modules/local/make_augustus_training_set/main'
+include { MAKE_RNA_HINTS } from '../../modules/local/make_rna_hints/main'
 workflow MIKADO_RUN {
     take:
         mikado_list
@@ -22,7 +21,7 @@ workflow MIKADO_RUN {
         ch_versions = ch_versions.mix(DIAMOND.out.versions)
         TRANSDECODER(MIKADO_PREPARE.out.mikado_prepared)
         ch_versions = ch_versions.mix(TRANSDECODER.out.versions)
-        MIKADO_SERIALISE(MIKADO_CONFIGURE.out.mikado_configuratio, DIAMOND.out.diamond_res, TRANSDECODER.out.transdecoder_res, protdb, MIKADO_PREPARE.out.mikado_prepared, junctions)
+        MIKADO_SERIALISE(MIKADO_CONFIGURE.out.mikado_configuration, DIAMOND.out.diamond_res, TRANSDECODER.out.transdecoder_res, protdb, MIKADO_PREPARE.out.mikado_prepared, junctions)
         ch_versions = ch_versions.mix(MIKADO_SERIALISE.out.versions)
         MIKADO_PICK(MIKADO_CONFIGURE.out.mikado_configuration, MIKADO_SERIALISE.out.mikado_serialise_res, MIKADO_CONFIGURE.out.mikado_scoring_copy)
         ch_versions = ch_versions.mix(MIKADO_PICK.out.versions)

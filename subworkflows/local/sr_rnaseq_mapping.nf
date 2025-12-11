@@ -1,11 +1,11 @@
-include { HISAT2_BUILD } from '../modules/local/hisat2_build/main'
-include { HISAT2; HISAT2_MAPPING} from '../modules/local/hisat2/main'
-include { SAM_TO_BAM } from '../modules/local/sam_to_bam/main'
-include { SAMBAMBA_SORT } from '../modules/local/sambamba_sort/main'
-include { SAMTOOLS_MERGE } from '../modules/local/samtools_merge/main'
-include { SAMTOOLS_INDEX; SAMTOOLS_INDEX as SAMTOOLS_MERGE_INDEX } from '../modules/local/samtools_index/main'
-include { STRINGTIE_HISAT } from '../modules/local/stringtie/main'
-include { CREATE_HISAT_GTF_LIST } from '../modules/local/make_file_list/main'
+include { HISAT2_BUILD } from '../../modules/local/hisat2_build/main'
+include { HISAT2; HISAT2_MAPPING} from '../../modules/local/hisat2/main'
+include { SAM_TO_BAM } from '../../modules/local/sam_to_bam/main'
+include { SAMBAMBA_SORT } from '../../modules/local/sambamba_sort/main'
+include { SAMTOOLS_MERGE } from '../../modules/local/samtools_merge/main'
+include { SAMTOOLS_INDEX; SAMTOOLS_INDEX as SAMTOOLS_MERGE_INDEX } from '../../modules/local/samtools_index/main'
+include { STRINGTIE_HISAT } from '../../modules/local/stringtie/main'
+include { CREATE_HISAT_GTF_LIST } from '../../modules/local/make_file_list/main'
 
 
 
@@ -21,10 +21,15 @@ workflow SR_RNASEQ_MAPPING {
             HISAT2_MAPPING(sr_rna_seq_reads, HISAT2_BUILD.out.hisat2_index)
             ch_versions = ch_versions.mix(HISAT2_MAPPING.out.versions)
             //hisat_bams=HISAT2_MAPPING.out.hisat2_bam.map { sample_id, file_path -> file_path }.collect().map { file_paths -> ['hisat_bam_merge',file_paths] }
+            HISAT2_MAPPING.out.hisat2_bam.view()
             hisat_bams = HISAT2_MAPPING.out.hisat2_bam
                 .map { sample_id, bam, bai -> [bam, bai] }
-                .collect()
-                .map { pairs -> ['hisat_bam_merge', pairs.collect{it[0]}, pairs.collect{it[1]}] }
+                .toList()
+                .map { pairs -> 
+                    def bams = pairs.collect { it[0] }
+                    def bais = pairs.collect { it[1] }
+                    ['hisat_bam_merge', bams, bais]
+                }
 
             STRINGTIE_HISAT(HISAT2_MAPPING.out.hisat2_bam)
             ch_versions = ch_versions.mix(STRINGTIE_HISAT.out.versions)
@@ -41,8 +46,13 @@ workflow SR_RNASEQ_MAPPING {
             //hisat_bams=SAMTOOLS_INDEX.out.bam_bai.map { sample_id, bam, bai -> [bam, bai] }.collect().map { file_paths -> ['hisat_bam_merge',file_paths] }
             hisat_bams = SAMTOOLS_INDEX.out.bam_bai
                 .map { sample_id, bam, bai -> [bam, bai] }
-                .collect()
-                .map { pairs -> ['hisat_bam_merge', pairs.collect{it[0]}, pairs.collect{it[1]}] }
+                .toList()
+                .map { pairs -> 
+                    def bams = pairs.collect { it[0] }
+                    def bais = pairs.collect { it[1] }
+                    ['hisat_bam_merge', bams, bais]
+                }
+
 
 
 
@@ -50,7 +60,7 @@ workflow SR_RNASEQ_MAPPING {
             STRINGTIE_HISAT(SAMTOOLS_INDEX.out.bam_bai)
             ch_versions = ch_versions.mix(STRINGTIE_HISAT.out.versions)
         }
-
+        hisat_bams.view()
         SAMTOOLS_MERGE(hisat_bams)
         ch_versions = ch_versions.mix(SAMTOOLS_MERGE.out.versions)
         SAMTOOLS_MERGE_INDEX(SAMTOOLS_MERGE.out.bam)

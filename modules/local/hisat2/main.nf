@@ -3,7 +3,7 @@ process HISAT2_MAPPING{
     
     input:
         tuple val(sample_id), path(read1), path(read2)
-        pasth genome_index
+        path genome_index
     output:
         tuple val(sample_id), path("${sample_id}.hisat2.sorted.bam"), path("${sample_id}.hisat2.sorted.bam.bai"), emit:hisat2_bam
         path "versions.yml", emit: versions
@@ -39,7 +39,7 @@ process HISAT2{
     
     input:
         tuple val(sample_id), path(read1), path(read2)
-        pasth genome_index
+        path genome_index
     output:
         tuple val(sample_id), path("${sample_id}.hisat2.sam"), emit:hisat2_sam
         path "versions.yml", emit: versions
