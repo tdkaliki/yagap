@@ -8,13 +8,17 @@ process SAMTOOLS_INDEX{
         path "versions.yml", emit: versions
     script:
         """
-        samtools index -bSu ${sam_file} > ${sam_file.baseName}.bam
-        #rm ${sam_file}
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            samtools: \$(samtools --version)
-        END_VERSIONS
-        """
+        samtools index ${bam_file}
+        
+        #rm ${bam_file}
+        #cat <<-END_VERSIONS > versions.yml
+        #"${task.process}":
+        #    samtools: \$(samtools --version)
+        #END_VERSIONS
+        
+        touch versions.yml
+
+	"""
     stub:
         """
         touch ${bam_file}.bai

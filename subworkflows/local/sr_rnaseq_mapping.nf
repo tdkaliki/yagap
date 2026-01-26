@@ -18,7 +18,7 @@ workflow SR_RNASEQ_MAPPING {
         HISAT2_BUILD(genome)
         ch_versions = ch_versions.mix(HISAT2_BUILD.out.versions)
         if (params.run_clean_hisat2) {
-            HISAT2_MAPPING(sr_rna_seq_reads, HISAT2_BUILD.out.hisat2_index)
+            HISAT2_MAPPING(sr_rna_seq_reads, genome, HISAT2_BUILD.out.hisat2_index)
             ch_versions = ch_versions.mix(HISAT2_MAPPING.out.versions)
             //hisat_bams=HISAT2_MAPPING.out.hisat2_bam.map { sample_id, file_path -> file_path }.collect().map { file_paths -> ['hisat_bam_merge',file_paths] }
             HISAT2_MAPPING.out.hisat2_bam.view()

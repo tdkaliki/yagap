@@ -10,11 +10,13 @@ process STRINGTIE_HISAT{
         """
         stringtie ${bam_file} -o ${sample_id}.stringtie.gtf -p ${task.cpus}
         #rm ${bam_file}
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            stringtie: \$(samtools --version)
-        END_VERSIONS
-        """
+        #cat <<-END_VERSIONS > versions.yml
+        #"${task.process}":
+        #    stringtie: \$(samtools --version)
+        #END_VERSIONS
+        touch versions.yml
+
+	"""
     stub:
         """
         touch ${sample_id}.stringtie.gtf

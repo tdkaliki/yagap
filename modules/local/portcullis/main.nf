@@ -11,11 +11,14 @@ process PORTCULIS{
         """
         portcullis full -t ${task.cpus} -v --bam_filter --orientation FR -o portcullis_rezults ${genome} ${bam_file}
 
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            portcullis: \$(portcullis --version)
-        END_VERSIONS
-        """
+        #cat <<-END_VERSIONS > versions.yml
+        #"${task.process}":
+        #    portcullis: \$(portcullis --version)
+        #END_VERSIONS
+        
+	touch versions.yml
+
+	"""
     stub:
         """
         mkdir -p portcullis_rezults/3-filt

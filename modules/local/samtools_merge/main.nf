@@ -16,10 +16,13 @@ process SAMTOOLS_MERGE {
             ${bam_files}
     
         cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            samtools: \$(samtools --version)
-        END_VERSIONS
-        """
+        #"${task.process}":
+        #    samtools: \$(samtools --version)
+        #END_VERSIONS
+        
+	touch version.yml
+
+	"""
     stub:
         """
         touch ${meta}.merged.bam
