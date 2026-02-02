@@ -76,7 +76,7 @@ workflow YAGAP {
         }
     COMBINE_MIKADO_LIST1(mikado_gtf_list1)
     ///
-    MIKADO_RUN(COMBINE_MIKADO_LIST1.out.mikado_list, params.genome, params.scoringfile, params.protdb, GET_JUNCTIONS.out.junctions)
+    MIKADO_RUN(COMBINE_MIKADO_LIST1.out.mikado_list, params.genome, params.scoringfile, params.protdbfas, GET_JUNCTIONS.out.junctions)
     augustus_hints = augustus_hints.mix(MIKADO_RUN.out.rna_hints)
     //MIKADO_RUN.out.training_set
     ch_versions = ch_versions.mix(MIKADO_RUN.out.versions)
