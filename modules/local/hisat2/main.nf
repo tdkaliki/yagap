@@ -1,6 +1,6 @@
 process HISAT2_MAPPING{
     label 'hisat2_mapping'
-    
+    container 'community.wave.seqera.io/library/hisat2_sambamba_samtools:64093bec32df54e4'
     input:
         tuple val(sample_id), path(read1), path(read2)
     	path genome    
@@ -40,7 +40,7 @@ process HISAT2_MAPPING{
 
 process HISAT2{
     label 'hisat2'
-    
+    container 'community.wave.seqera.io/library/hisat2:892c0764f2333e63'
     input:
         tuple val(sample_id), path(read1), path(read2)
         path genome_index

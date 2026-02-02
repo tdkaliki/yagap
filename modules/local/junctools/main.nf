@@ -1,6 +1,6 @@
 process JUNCTOOLS{
     label 'junctools'
-    
+    container 'community.wave.seqera.io/library/portcullis:7eb0b668b6eb7926'
     input:
         tuple val(meta_info), path(junctions_bed)
     output:

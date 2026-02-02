@@ -1,6 +1,6 @@
 process HISAT2_BUILD{
     label 'hisat2_build'
-    
+    container 'community.wave.seqera.io/library/hisat2:892c0764f2333e63'
     input:
         path genome
     output:

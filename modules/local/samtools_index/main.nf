@@ -1,6 +1,6 @@
 process SAMTOOLS_INDEX{
     label 'samtools_index'
-    
+    container 'community.wave.seqera.io/library/samtools:3393ec69ae2c9272'
     input:
         tuple val(sample_id), path(bam_file)
     output:

@@ -1,5 +1,6 @@
 process MIKADO_CONFIGURE {
     label 'mikado_configure'
+    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
     input:
         tuple val(meta), path(mikado_list)
         path genome
@@ -33,6 +34,7 @@ process MIKADO_CONFIGURE {
 
 process MIKADO_PREPARE {
     label 'mikado_prepare'
+    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
     input:
         tuple val(meta), path(mikado_list)
         tuple val(meta), path(mikado_configuration)
@@ -63,6 +65,7 @@ process MIKADO_PREPARE {
 
 process MIKADO_SERIALISE {
     label 'mikado_serialise'
+    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
     input:
         tuple val(meta), path(mikado_list)
         path genome
@@ -96,10 +99,11 @@ process MIKADO_SERIALISE {
 
 process MIKADO_PICK {
     label 'mikdo_pick'
+    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
     input:
         tuple val(meta), path(mikado_list)
         path genome
-        path protdb
+        //path protdb
         tuple val(meta), path(junctions)
         tuple val(meta), path(mikado_configuration)
         tuple val(meta), path(mikado_serialise_res)

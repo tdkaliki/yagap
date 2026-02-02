@@ -1,6 +1,6 @@
 process SAMBAMBA_SORT{
     label 'sambamba_sort'
-    
+    container 'community.wave.seqera.io/library/sambamba:7fe8ebb9c0885a21'
     input:
         tuple val(sample_id), path(bam_file)
     output:

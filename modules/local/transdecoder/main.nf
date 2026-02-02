@@ -1,5 +1,6 @@
 process TRANSDECODER {
     label 'transdecoder'
+    container 'community.wave.seqera.io/library/transdecoder:ce6b59245ee56446'
     input:
         tuple val(meta), path(fasta)
     output:

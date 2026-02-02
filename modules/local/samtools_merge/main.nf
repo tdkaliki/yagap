@@ -1,6 +1,6 @@
 process SAMTOOLS_MERGE {
     label 'samtools_merge'
-    
+    container 'community.wave.seqera.io/library/samtools:3393ec69ae2c9272'
     input:
         tuple val(meta), path(bam_files), path(bai_file)
     

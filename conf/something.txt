@@ -276,3 +276,73 @@
         maxRetries    = 3
         errorStrategy = 'retry'
     }
+    withLabel:mikado_configure {
+
+        cpus   = 5
+
+        memory = { 2.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:MIKADO_PREPARE {
+
+        cpus   = 5
+
+        memory = { 2.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:diamond {
+
+        cpus   = 18
+
+        memory = { 5.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:diamond_db {
+
+        cpus   = 8
+
+        memory = { 2.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:transdecoder {
+
+        cpus   = 4
+
+        memory = { 3.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:MIKADO_SERIALISE {
+
+        cpus   = 10
+
+        memory = { 5.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
+    withLabel:mikdo_pick {
+
+        cpus   = 10
+
+        memory = { 5.GB * task.attempt }
+       
+        time = { task.attempt > 1 ? 240.hour : 72.hour }
+        maxRetries    = 3
+        errorStrategy = 'retry'
+    }
