@@ -1,6 +1,6 @@
 process LTR_FINDER {
     label "ltr_finder"
-    
+    container 'https://depot.galaxyproject.org/singularity/ltr_finder_parallel%3A1.4--hdfd78af_0'
     input:
         path genome
     

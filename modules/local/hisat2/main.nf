@@ -1,6 +1,6 @@
 process HISAT2_MAPPING{
     label 'hisat2_mapping'
-    container 'community.wave.seqera.io/library/hisat2_sambamba_samtools:64093bec32df54e4'
+    container 'https://depot.galaxyproject.org/singularity/bioconductor-rhisat2%3A1.22.0--r44he5774e6_1'
     input:
         tuple val(sample_id), path(read1), path(read2)
     	path genome    
@@ -20,12 +20,12 @@ process HISAT2_MAPPING{
 
         samtools index ${sample_id}.hisat2.sorted.bam
 
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    hisat2: \$(hisat2 --version)
-        #    samtools: \$(samtools --version)
-        #    sambamba: \$(samtools --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            hisat2: \$(hisat2 --version)
+            samtools: \$(samtools --version)
+            sambamba: \$(samtools --version)
+        END_VERSIONS
         
 	touch versions.yml
 	
@@ -40,7 +40,7 @@ process HISAT2_MAPPING{
 
 process HISAT2{
     label 'hisat2'
-    container 'community.wave.seqera.io/library/hisat2:892c0764f2333e63'
+    container 'https://depot.galaxyproject.org/singularity/bioconductor-rhisat2%3A1.22.0--r44he5774e6_1'
     input:
         tuple val(sample_id), path(read1), path(read2)
         path genome_index

@@ -1,6 +1,6 @@
 process METAEUK_RUN{
     label 'metaeuk_run'
-    
+    container 'https://depot.galaxyproject.org/singularity/metaeuk%3A7.bba0d80--pl5321hd6d6fdc_2'
     input:
         path fasta
         path genome_db

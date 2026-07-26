@@ -1,6 +1,6 @@
 process SAMBAMBA_SORT{
     label 'sambamba_sort'
-    container 'community.wave.seqera.io/library/sambamba:7fe8ebb9c0885a21'
+    container 'https://depot.galaxyproject.org/singularity/sambamba%3A1.0.1--he614052_4'
     input:
         tuple val(sample_id), path(bam_file)
     output:
@@ -12,7 +12,7 @@ process SAMBAMBA_SORT{
         #rm ${bam_file}
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            sambamba: \$(samtools --version)
+            sambamba: \$(sambamba --version)
         END_VERSIONS
         """
     stub:

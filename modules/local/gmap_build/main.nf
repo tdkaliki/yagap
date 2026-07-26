@@ -1,6 +1,6 @@
 process GMAP_BUILD{
     label 'gmap_build'
-    
+    container 'https://depot.galaxyproject.org/singularity/gmap%3A2025.07.31--pl5321hb1d24b7_1'
     input:
         path genome
     output:

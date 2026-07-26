@@ -1,6 +1,6 @@
 process SAM_TO_BAM{
     label 'sam_to_bam'
-    
+    container 'https://depot.galaxyproject.org/singularity/samtools%3A1.24--h9dcdb79_1'
     input:
         tuple val(sample_id), path(sam_file)
     output:

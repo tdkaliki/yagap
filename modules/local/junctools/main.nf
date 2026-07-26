@@ -10,10 +10,10 @@ process JUNCTOOLS{
         """
         junctools convert -if bed -of igff -o intron_hints.gff ${junctions_bed}
 
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    junctools: \$(junctools --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            junctools: \$(junctools --version)
+        END_VERSIONS
         
 	touch versions.yml
 

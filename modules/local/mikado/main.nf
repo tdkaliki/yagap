@@ -1,6 +1,6 @@
 process MIKADO_CONFIGURE {
     label 'mikado_configure'
-    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
         tuple val(meta), path(mikado_list)
         path genome
@@ -15,11 +15,11 @@ process MIKADO_CONFIGURE {
         """
         mikado configure -t ${task.cpus} --list ${mikado_list}  --reference ${genome} --mode permissive --scoring ${scoringfile} --copy-scoring scoring_copy.yaml --junctions ${junctions} -bt ${protdb} mikado_configuration.yaml
         
-        #mikado prepare --json-conf mikado_configuration.yaml
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    mikado: \$(mikado --version)
-        #END_VERSIONS
+        mikado prepare --json-conf mikado_configuration.yaml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version)
+        END_VERSIONS
         
         touch versions.yml
 
@@ -34,7 +34,7 @@ process MIKADO_CONFIGURE {
 
 process MIKADO_PREPARE {
     label 'mikado_prepare'
-    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
         tuple val(meta), path(mikado_list)
         tuple val(meta), path(mikado_configuration)
@@ -50,10 +50,10 @@ process MIKADO_PREPARE {
         """
         mikado prepare --json-conf ${mikado_configuration}
         
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    mikado: \$(mikado --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version)
+        END_VERSIONS
         touch versions.yml
         """
     stub:
@@ -65,7 +65,7 @@ process MIKADO_PREPARE {
 
 process MIKADO_SERIALISE {
     label 'mikado_serialise'
-    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
         tuple val(meta), path(mikado_list)
         path genome
@@ -83,10 +83,10 @@ process MIKADO_SERIALISE {
         """
         mikado serialise --procs ${task.cpus} --json-conf ${mikado_configuration} --tsv ${diamond_res} --orfs ${transdecoder_res} --blast_targets ${protdbfas} --transcripts ${mikado_prepared} --junctions ${junctions}
         
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    mikado: \$(diamond --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(diamond --version)
+        END_VERSIONS
         
         touch versions.yml
         """
@@ -99,7 +99,7 @@ process MIKADO_SERIALISE {
 
 process MIKADO_PICK {
     label 'mikdo_pick'
-    container 'community.wave.seqera.io/library/mikado:696fd9fadd0f73dd'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
         tuple val(meta), path(mikado_list)
         path genome
@@ -118,10 +118,10 @@ process MIKADO_PICK {
     """
         mikado pick --procs ${task.cpus} --json-conf ${mikado_configuration} --subloci-out mikado.subloci.gff3
 
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    mikado: \$(diamond --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(diamond --version)
+        END_VERSIONS
 
         touch versions.yml
     """

@@ -1,5 +1,6 @@
 process AUGUSTUS_TRAINING {
     label 'augustus_training'
+    container 'https://depot.galaxyproject.org/singularity/augustus%3A3.5.0--pl5321h9716f88_9'
     input:
         tuple val(meta), path(trainingset)
         path genome

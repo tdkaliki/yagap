@@ -1,6 +1,6 @@
 process BED_MASK {
     label "bed_mask"
-    
+    container 'https://depot.galaxyproject.org/singularity/bedtools%3A2.31.1--hf5e1c6e_2'
     input:
         path genome
         tuple val(meta), path (rep_bed)

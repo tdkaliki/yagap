@@ -1,6 +1,6 @@
 process REPEATMASKER_WITH_MODEL {
     label "repeatmasker"
-    
+    container 'https://depot.galaxyproject.org/singularity/repeatmasker%3A4.2.4--pl5321hdfd78af_0'
     input:
         tuple val(model_id), path(model), path(genome)
     
@@ -26,7 +26,7 @@ process REPEATMASKER_WITH_MODEL {
 
 process REPEATMASKER_STANDARD {
     label "repeatmasker"
-    
+    container 'https://depot.galaxyproject.org/singularity/repeatmasker%3A4.2.4--pl5321hdfd78af_0'
     input:
         tuple val(species), path(genome)
     

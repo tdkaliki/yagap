@@ -1,6 +1,6 @@
 process GMAP_MAPPING{
     label 'gmap_mapping'
-    
+    container 'https://depot.galaxyproject.org/singularity/gmap%3A2025.07.31--pl5321hb1d24b7_1'
     input:
         tuple val(sample_id), path(fasta)
         path gmapdb

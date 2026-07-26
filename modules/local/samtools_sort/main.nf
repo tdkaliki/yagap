@@ -1,6 +1,6 @@
 process SAMTOOLS_SORT{
     label 'samtools_sort'
-    
+    container 'https://depot.galaxyproject.org/singularity/samtools%3A1.24--h9dcdb79_1'
     input:
         tuple val(sample_id), path(bam_file)
     output:

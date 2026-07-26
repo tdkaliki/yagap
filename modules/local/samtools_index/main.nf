@@ -1,6 +1,6 @@
 process SAMTOOLS_INDEX{
     label 'samtools_index'
-    container 'community.wave.seqera.io/library/samtools:3393ec69ae2c9272'
+    container 'https://depot.galaxyproject.org/singularity/samtools%3A1.24--h9dcdb79_1'
     input:
         tuple val(sample_id), path(bam_file)
     output:
@@ -11,10 +11,10 @@ process SAMTOOLS_INDEX{
         samtools index ${bam_file}
         
         #rm ${bam_file}
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    samtools: \$(samtools --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            samtools: \$(samtools --version)
+        END_VERSIONS
         
         touch versions.yml
 

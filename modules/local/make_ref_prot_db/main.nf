@@ -1,6 +1,6 @@
 process MAKE_REF_PROT_DB{
     label 'make_ref_prot_db'
-    
+    container 'https://depot.galaxyproject.org/singularity/mmseqs2%3A18.8cc5c--hd6d6fdc_0'
     input:
         path fasta
     output:

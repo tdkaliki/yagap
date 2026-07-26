@@ -1,6 +1,7 @@
 process TRANSDECODER {
+
     label 'transdecoder'
-    container 'community.wave.seqera.io/library/transdecoder:ce6b59245ee56446'
+    container 'https://depot.galaxyproject.org/singularity/transdecoder%3A6.0.0--pl5321hdfd78af_0'
     input:
         tuple val(meta), path(fasta)
     output:
@@ -11,12 +12,12 @@ process TRANSDECODER {
         TransDecoder.LongOrfs -t ${fasta}
         TransDecoder.Predict -t ${fasta}
 
-        #cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    TransDecoder: \$(diamond --version)
-        #END_VERSIONS
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            TransDecoder: \$(TransDecoder.LongOrfs --version 2>&1 | sed 's/TransDecoder.LongOrfs //')
+        END_VERSIONS
 
-        touch versions.yml    
+        touch versions.yml
         """
     stub:
         """

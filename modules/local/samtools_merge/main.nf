@@ -1,6 +1,6 @@
 process SAMTOOLS_MERGE {
     label 'samtools_merge'
-    container 'community.wave.seqera.io/library/samtools:3393ec69ae2c9272'
+    container 'https://depot.galaxyproject.org/singularity/samtools%3A1.24--h9dcdb79_1'
     input:
         tuple val(meta), path(bam_files), path(bai_file)
     
@@ -16,9 +16,9 @@ process SAMTOOLS_MERGE {
             ${bam_files}
     
         cat <<-END_VERSIONS > versions.yml
-        #"${task.process}":
-        #    samtools: \$(samtools --version)
-        #END_VERSIONS
+        "${task.process}":
+            samtools: \$(samtools --version)
+        END_VERSIONS
         
 	touch version.yml
 
