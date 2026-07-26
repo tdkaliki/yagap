@@ -15,13 +15,15 @@ process STRINGTIE_HISAT{
         "${task.process}":
             stringtie: \$(stringtie --version)
         END_VERSIONS
-        touch versions.yml
 
 	"""
     stub:
         """
         touch ${sample_id}.stringtie.gtf
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            stringtie: \$(stringtie --version)
+        END_VERSIONS
         """
 }
 
@@ -46,6 +48,9 @@ process STRINGTIE_MINIMAP{
     stub:
         """
         touch ${sample_id}.stringtie.gtf
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            stringtie: \$(stringtie --version)
+        END_VERSIONS
         """
 }

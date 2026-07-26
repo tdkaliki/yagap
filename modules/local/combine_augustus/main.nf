@@ -1,5 +1,6 @@
 process COMBINE_AUGUSTUS {
     label 'combine_augustus'
+    container 'https://depot.galaxyproject.org/singularity/gffread%3A0.12.9--hf426362_0'
     input:
         tuple val(meta), path(augustus_res_files)
         path genome
@@ -20,14 +21,17 @@ process COMBINE_AUGUSTUS {
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            gffread: \$(diamond --version)
+            gffread: \$(gffread --version)
         END_VERSIONS
         """
     stub:
         """
         touch augustus_genes.gtf
         touch augustus_for_mikado.txt
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            gffread: \$(gffread --version)
+        END_VERSIONS
         """    
 }
 

@@ -14,12 +14,15 @@ process LTR_FINDER {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            LTR_FINDER_parallel: \$(LTR_FINDER_parallel --version)
+            LTR_FINDER_parallel: \$(LTR_FINDER_parallel --version 2>&1 | grep -m1 -i 'Version:' | sed 's/^Version: //')
         END_VERSIONS
         """
     stub:
         """
         touch LTR_FINDER.gff3
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            LTR_FINDER_parallel: \$(LTR_FINDER_parallel --version 2>&1 | grep -m1 -i 'Version:' | sed 's/^Version: //')
+        END_VERSIONS
         """
 }

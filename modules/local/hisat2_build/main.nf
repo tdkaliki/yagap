@@ -1,6 +1,6 @@
 process HISAT2_BUILD{
     label 'hisat2_build'
-    container 'https://depot.galaxyproject.org/singularity/bioconductor-rhisat2%3A1.22.0--r44he5774e6_1'
+    container 'https://depot.galaxyproject.org/singularity/hisat2%3A2.2.2--h503566f_0'
     input:
         path genome
     output:
@@ -15,15 +15,23 @@ process HISAT2_BUILD{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            hisat2: \$(hisat2 --version)
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
         END_VERSIONS
         
-	touch versions.yml
-
 	"""
     stub:
         """
-        touch ${genome.baseName}.hisat2_index
-        touch versions.yml
+        touch ${genome.baseName}.hisat2_index.1.ht2
+        touch ${genome.baseName}.hisat2_index.2.ht2
+        touch ${genome.baseName}.hisat2_index.3.ht2
+        touch ${genome.baseName}.hisat2_index.4.ht2
+        touch ${genome.baseName}.hisat2_index.5.ht2
+        touch ${genome.baseName}.hisat2_index.6.ht2
+        touch ${genome.baseName}.hisat2_index.7.ht2
+        touch ${genome.baseName}.hisat2_index.8.ht2
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
+        END_VERSIONS
         """    
 }

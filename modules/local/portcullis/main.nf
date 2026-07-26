@@ -13,16 +13,18 @@ process PORTCULIS{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            portcullis: \$(portcullis --version)
+            portcullis: \$(portcullis --version| sed 's/^portcullis //')
         END_VERSIONS
         
-	touch versions.yml
 
 	"""
     stub:
         """
         mkdir -p portcullis_rezults/3-filt
         touch portcullis_rezults/3-filt/portcullis_filtered.pass.junctions.bed
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            portcullis: \$(portcullis --version| sed 's/^portcullis //')
+        END_VERSIONS
         """
 }

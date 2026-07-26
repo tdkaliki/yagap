@@ -12,12 +12,15 @@ process FILTER_METAEUK{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            python: \$(metaeuk --version)
+            python: \$(python3 --version | sed 's/^Python //')
         END_VERSIONS
         """
     stub:
         """
         touch protei_hints.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python3 --version | sed 's/^Python //')
+        END_VERSIONS
         """    
 }

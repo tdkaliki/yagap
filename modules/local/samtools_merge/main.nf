@@ -17,15 +17,17 @@ process SAMTOOLS_MERGE {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            samtools: \$(samtools --version)
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
         END_VERSIONS
         
-	touch version.yml
 
 	"""
     stub:
         """
         touch ${meta}.merged.bam
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
+        END_VERSIONS
         """
 }

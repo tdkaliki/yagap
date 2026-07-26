@@ -13,15 +13,16 @@ process SAMTOOLS_INDEX{
         #rm ${bam_file}
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            samtools: \$(samtools --version)
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
         END_VERSIONS
         
-        touch versions.yml
-
 	"""
     stub:
         """
         touch ${bam_file}.bai
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
+        END_VERSIONS
         """
 }

@@ -15,12 +15,15 @@ process BED_MASK {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            bedtools: \$(bedtools --version)
+            bedtools: \$(bedtools --version | sed 's/^bedtools //')
         END_VERSIONS
         """
     stub:
         """
         touch genome.sm.fasta
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            bedtools: \$(bedtools --version | sed 's/^bedtools //')
+        END_VERSIONS
         """    
 }

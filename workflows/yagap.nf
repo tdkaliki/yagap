@@ -9,6 +9,8 @@ include { COMBINE_MIKADO_LIST as COMBINE_MIKADO_LIST1; COMBINE_MIKADO_LIST as CO
 include { COMBINE_HINTS } from '../modules/local/combine_hints'
 include { AUGUSTUS_ANNOTATION } from '../subworkflows/local/augustus_annotation'
 include { REPEAT_MASKING } from '../subworkflows/local/repeat_masking'
+include { DIAMOND_MAKEDB } from '../modules/local/diamond/main'
+include { softwareVersionsToYAML} from "../subworkflows/local/utils"
 
 workflow YAGAP {
     main:
@@ -76,7 +78,13 @@ workflow YAGAP {
         }
     COMBINE_MIKADO_LIST1(mikado_gtf_list1)
     ///
-    MIKADO_RUN(COMBINE_MIKADO_LIST1.out.mikado_list, params.genome, params.scoringfile, params.protdbfas, GET_JUNCTIONS.out.junctions)
+
+    protch = Channel.fromPath(params.protdbfas).map { fasta -> tuple("protdb", fasta) }
+    DIAMOND_MAKEDB(protch)
+    ch_versions = ch_versions.mix(DIAMOND_MAKEDB.out.versions)
+    protdb=DIAMOND_MAKEDB.out.db
+
+    MIKADO_RUN(COMBINE_MIKADO_LIST1.out.mikado_list, params.genome, params.scoringfile, protdb, Channel.fromPath(params.protdbfas), GET_JUNCTIONS.out.junctions)
     augustus_hints = augustus_hints.mix(MIKADO_RUN.out.rna_hints)
     //MIKADO_RUN.out.training_set
     ch_versions = ch_versions.mix(MIKADO_RUN.out.versions)
@@ -122,9 +130,12 @@ workflow YAGAP {
                     ['combine_gtfs_for_mikado', all_paths]  // Create new structure
             }
             COMBINE_MIKADO_LIST2(mikado_gtf_list2)
-            MIKADO_RUN_AFTER_AUGUSTUS(COMBINE_MIKADO_LIST2.out.mikado_list, params.genome, params.scoringfile, params.protdb, GET_JUNCTIONS.out.junctions)
+            MIKADO_RUN_AFTER_AUGUSTUS(COMBINE_MIKADO_LIST2.out.mikado_list, params.genome, params.scoringfile, protdb, Channel.fromPath(params.protdbfas),GET_JUNCTIONS.out.junctions)
             MIKADO_RUN_AFTER_AUGUSTUS.out.mikado_annotation
             ch_versions = ch_versions.mix(MIKADO_RUN.out.versions)
         }
     }
+    version_yaml = Channel.empty()
+    version_yaml = softwareVersionsToYAML(ch_versions)
+        .collectFile(storeDir: "${params.outdir}", name: 'yagap_software_versions.yml', sort: true, newLine: true)
 }

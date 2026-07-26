@@ -11,12 +11,15 @@ process MAKE_RNA_HINTS {
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            python: \$(diamond --version)
+            python: \$(python3 --version | sed 's/^Python //')
         END_VERSIONS
         """
     stub:
         """
         touch RNA_hints.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python3 --version | sed 's/^Python //')
+        END_VERSIONS
         """
 }

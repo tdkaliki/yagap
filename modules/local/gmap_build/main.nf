@@ -20,6 +20,9 @@ process GMAP_BUILD{
         """
         mkdir gmapdb
         mkdir Genome
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            gmap: \$(gmap --version)
+        END_VERSIONS
         """    
 }

@@ -1,7 +1,7 @@
 process TRANSDECODER {
 
     label 'transdecoder'
-    container 'https://depot.galaxyproject.org/singularity/transdecoder%3A6.0.0--pl5321hdfd78af_0'
+    container 'https://depot.galaxyproject.org/singularity/transdecoder%3A5.7.1--pl5321hdfd78af_2'
     input:
         tuple val(meta), path(fasta)
     output:
@@ -17,11 +17,13 @@ process TRANSDECODER {
             TransDecoder: \$(TransDecoder.LongOrfs --version 2>&1 | sed 's/TransDecoder.LongOrfs //')
         END_VERSIONS
 
-        touch versions.yml
         """
     stub:
         """
         touch fasta.transdecoder.bed
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            TransDecoder: \$(TransDecoder.LongOrfs --version 2>&1 | sed 's/TransDecoder.LongOrfs //')
+        END_VERSIONS
         """
 }

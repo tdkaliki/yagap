@@ -21,6 +21,9 @@ process GMAP_MAPPING{
     stub:
         """
         touch ${sample_id}.gff3
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            gmap: \$(gmap --version)
+        END_VERSIONS
         """    
 }

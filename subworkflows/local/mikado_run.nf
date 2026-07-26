@@ -1,5 +1,5 @@
 include { MIKADO_CONFIGURE; MIKADO_PREPARE; MIKADO_SERIALISE; MIKADO_PICK } from '../../modules/local/mikado/main'
-include { DIAMOND_MAKEDB; DIAMOND } from '../../modules/local/diamond/main'
+include { DIAMOND } from '../../modules/local/diamond/main'
 include { TRANSDECODER } from '../../modules/local/transdecoder/main'
 include { METAEUK_RUN } from '../../modules/local/metaeuk_run/main'
 include { MAKE_AUGUSTUS_TRAINING_SET } from '../../modules/local/make_augustus_training_set/main'
@@ -9,14 +9,11 @@ workflow MIKADO_RUN {
         mikado_list
 		genome
         scoringfile
+        protdb
         protdbfas
         junctions
     main:
         Channel.empty().set { ch_versions }
-        protch = protdbfas.map { fasta -> tuple("protdb", fasta) }
-        DIAMOND_MAKEDB(protch)
-        ch_versions = ch_versions.mix(DIAMOND_MAKEDB.out.versions)
-        protdb=DIAMOND_MAKEDB.out.db
         MIKADO_CONFIGURE(mikado_list, genome, scoringfile, protdb, junctions)
         ch_versions = ch_versions.mix(MIKADO_CONFIGURE.out.versions)
         MIKADO_PREPARE(mikado_list, MIKADO_CONFIGURE.out.mikado_configuration, MIKADO_CONFIGURE.out.mikado_scoring_copy, genome, protdb, junctions)

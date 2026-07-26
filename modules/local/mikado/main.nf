@@ -18,17 +18,18 @@ process MIKADO_CONFIGURE {
         mikado prepare --json-conf mikado_configuration.yaml
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            mikado: \$(mikado --version)
+            mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
         
-        touch versions.yml
-
         """
     stub:
         """
         touch mikado_configuration.yaml
         touch scoring_copy.yaml
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version| sed 's/^Mikado //')
+        END_VERSIONS
         """
 }
 
@@ -52,14 +53,17 @@ process MIKADO_PREPARE {
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            mikado: \$(mikado --version)
+            mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
-        touch versions.yml
         """
     stub:
         """
         touch mikado_prepared.fasta
-        touch versions.yml
+        touch mikado_prepared.gtf
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version| sed 's/^Mikado //')
+        END_VERSIONS
         """
 }
 
@@ -85,15 +89,17 @@ process MIKADO_SERIALISE {
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            mikado: \$(diamond --version)
+            mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
         
-        touch versions.yml
         """
     stub:
         """
         touch mikado.db
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version| sed 's/^Mikado //')
+        END_VERSIONS
         """
 }
 
@@ -120,15 +126,17 @@ process MIKADO_PICK {
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            mikado: \$(diamond --version)
+            mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
 
-        touch versions.yml
     """
     stub:
         """
         touch mikado.loci.gff3
         touch mikado.loci.metrics.tsv
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mikado: \$(mikado --version| sed 's/^Mikado //')
+        END_VERSIONS
         """
 }

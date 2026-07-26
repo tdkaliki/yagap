@@ -14,12 +14,15 @@ process BED_MERGE {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            bedtools: \$(bedtools --version)
+            bedtools: \$(bedtools --version | sed 's/^bedtools //')
         END_VERSIONS
         """
     stub:
         """
         touch ${bed.name.replace('.bed', '.merged.bed')}
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            bedtools: \$(bedtools --version | sed 's/^bedtools //')
+        END_VERSIONS
         """    
 }

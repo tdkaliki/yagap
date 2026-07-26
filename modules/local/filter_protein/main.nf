@@ -12,12 +12,15 @@ process FILTER_PROTEIN{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            python: \$(gmap --version)
+            python: \$(python3 --version | sed 's/^Python //')
         END_VERSIONS
         """
     stub:
         """
         touch good_proteins.fasta
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python3 --version | sed 's/^Python //')
+        END_VERSIONS
         """    
 }

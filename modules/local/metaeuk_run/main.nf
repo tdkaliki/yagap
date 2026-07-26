@@ -15,12 +15,15 @@ process METAEUK_RUN{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            metaeuk: \$(metaeuk --version)
+            metaeuk: \$(metaeuk --version 2>&1 | grep -m1 '^metaeuk Version:' | sed 's/^metaeuk Version: //')
         END_VERSIONS
         """
     stub:
         """
         touch metaeuk_res.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            metaeuk: \$(metaeuk --version 2>&1 | grep -m1 '^metaeuk Version:' | sed 's/^metaeuk Version: //')
+        END_VERSIONS
         """
 }

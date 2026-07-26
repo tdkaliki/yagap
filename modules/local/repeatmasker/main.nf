@@ -14,13 +14,16 @@ process REPEATMASKER_WITH_MODEL {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            RepeatMasker: \$(RepeatMasker --version)
+            RepeatMasker: \$(RepeatMasker --version | head -n1 | sed 's/^.*version //')
         END_VERSIONS
         """
     stub:
         """
         touch ${genome}.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            RepeatMasker: \$(RepeatMasker --version | head -n1 | sed 's/^.*version //')
+        END_VERSIONS
         """
 }
 
@@ -40,12 +43,15 @@ process REPEATMASKER_STANDARD {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            RepeatMasker: \$(RepeatMasker --version)
+            RepeatMasker: \$(RepeatMasker --version | head -n1 | sed 's/^.*version //')
         END_VERSIONS
         """
     stub:
         """
         touch ${genome}.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            RepeatMasker: \$(RepeatMasker --version | head -n1 | sed 's/^.*version //')
+        END_VERSIONS
         """
 }

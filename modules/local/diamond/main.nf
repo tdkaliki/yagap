@@ -13,16 +13,17 @@ process DIAMOND {
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            diamond: \$(diamond --version)
+            diamond: \$(diamond --version | sed 's/^.*version //')
         END_VERSIONS
-
-        touch versions.yml
     
         """
     stub:
         """
         touch diamond_res.tsv
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            diamond: \$(diamond --version | sed 's/^.*version //')
+        END_VERSIONS
         """    
 }
 
@@ -48,16 +49,18 @@ process DIAMOND_MAKEDB {
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            diamond: \$(diamond --version)
+            diamond: \$(diamond --version | sed 's/^.*version //')
         END_VERSIONS
 
-        touch versions.yml
     
         """
     stub:
         """
         touch ${db_name}.dmnd
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            diamond: \$(diamond --version | sed 's/^.*version //')
+        END_VERSIONS
         """    
 }
 

@@ -16,12 +16,15 @@ process AUGUSTUS_TRAINING {
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            augustus: \$(diamond --version)
+            augustus: \$(augustus --version 2>&1 | head -n1 | grep -oP '\\d+\\.\\d+\\.\\d+')
         END_VERSIONS
     
         """
     stub:
         """
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            augustus: \$(augustus --version 2>&1 | head -n1 | grep -oP '\\d+\\.\\d+\\.\\d+')
+        END_VERSIONS
         """    
 }

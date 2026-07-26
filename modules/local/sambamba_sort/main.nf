@@ -4,7 +4,7 @@ process SAMBAMBA_SORT{
     input:
         tuple val(sample_id), path(bam_file)
     output:
-        tuple val(sample_id), path("${sam_file.baseName}.sorted.bam"), emit:sorted_bam_file
+        tuple val(sample_id), path("${bam_file.baseName}.sorted.bam"), emit:sorted_bam_file
         path "versions.yml", emit: versions
     script:
         """
@@ -12,12 +12,15 @@ process SAMBAMBA_SORT{
         #rm ${bam_file}
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            sambamba: \$(sambamba --version)
+            sambamba: \$(sambamba --version 2>&1 | grep -m1 '^sambamba' | sed 's/^sambamba //')
         END_VERSIONS
         """
     stub:
         """
-        touch ${sam_file.baseName}.sorted.bam
-        touch versions.yml
+        touch ${bam_file.baseName}.sorted.bam
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            sambamba: \$(sambamba --version 2>&1 | grep -m1 '^sambamba' | sed 's/^sambamba //')
+        END_VERSIONS
         """
 }

@@ -1,6 +1,6 @@
 process HISAT2_MAPPING{
     label 'hisat2_mapping'
-    container 'https://depot.galaxyproject.org/singularity/bioconductor-rhisat2%3A1.22.0--r44he5774e6_1'
+    container 'oras://community.wave.seqera.io/library/hisat2_samtools:5a258fe6e30b2c20'
     input:
         tuple val(sample_id), path(read1), path(read2)
     	path genome    
@@ -22,9 +22,9 @@ process HISAT2_MAPPING{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            hisat2: \$(hisat2 --version)
-            samtools: \$(samtools --version)
-            sambamba: \$(samtools --version)
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
+            sambamba: \$(sambamba --version 2>&1 | grep -m1 '^sambamba' | sed 's/^sambamba //')
         END_VERSIONS
         
 	touch versions.yml
@@ -34,13 +34,18 @@ process HISAT2_MAPPING{
         """
         touch ${sample_id}.hisat2.sorted.bam
         touch ${sample_id}.hisat2.sorted.bam.bai
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
+            sambamba: \$(sambamba --version 2>&1 | grep -m1 '^sambamba' | sed 's/^sambamba //')
+        END_VERSIONS
         """    
 }
 
 process HISAT2{
     label 'hisat2'
-    container 'https://depot.galaxyproject.org/singularity/bioconductor-rhisat2%3A1.22.0--r44he5774e6_1'
+    container 'https://depot.galaxyproject.org/singularity/hisat2%3A2.2.2--h503566f_0'
     input:
         tuple val(sample_id), path(read1), path(read2)
         path genome_index
@@ -53,12 +58,15 @@ process HISAT2{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            hisat2: \$(hisat2 --version)
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
         END_VERSIONS
         """
     stub:
         """
         touch ${sample_id}.hisat2.sam
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            hisat2: \$(hisat2 --version | head -n1 | sed 's/^.*version //')
+        END_VERSIONS
         """    
 }

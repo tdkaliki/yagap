@@ -1,6 +1,6 @@
 process SPLIT_GENOME {
     label "split_genome"
-    
+    container 'https://depot.galaxyproject.org/singularity/exonerate%3A2.4.0--hf34a1b8_9'
     input:
         path genome_fasta
         val N
@@ -28,7 +28,7 @@ process SPLIT_GENOME {
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-        fastasplit: \$(fastasplit --version 2>&1 | grep -oP 'fastasplit \\K[0-9.]+' || echo "1.0.0")
+            fastasplit: \$(fastasplit --version 2>&1 | grep -oP 'fastasplit \\K[0-9.]+' || echo "1.0.0")
         END_VERSIONS
         """
     stub:
@@ -37,6 +37,9 @@ process SPLIT_GENOME {
         for i in \$(seq 1 ${N}); do
             touch ${genome_fasta.baseName}_part_\${i}
         done
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            fastasplit: \$(fastasplit --version 2>&1 | grep -oP 'fastasplit \\K[0-9.]+' || echo "1.0.0")
+        END_VERSIONS
         """
 }

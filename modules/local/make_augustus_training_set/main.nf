@@ -12,13 +12,16 @@ process MAKE_AUGUSTUS_TRAINING_SET {
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            python: \$(diamond --version)
+            python: \$(python3 --version | sed 's/^Python //')
         END_VERSIONS
     
         """
     stub:
         """
         touch Augustus_training.gff
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            python: \$(python3 --version | sed 's/^Python //')
+        END_VERSIONS
         """
 }

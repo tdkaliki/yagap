@@ -12,12 +12,15 @@ process SAM_TO_BAM{
         #rm ${sam_file}
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            samtools: \$(samtools --version)
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
         END_VERSIONS
         """
     stub:
         """
         touch ${sam_file.baseName}.bam
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
+        END_VERSIONS
         """
 }

@@ -18,12 +18,15 @@ process MAKE_REF_PROT_DB{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            mmseqs: \$(gmap --version)
+            mmseqs: \$(mmseqs --version 2>&1 | grep -m1 '^MMseqs2 Version:' | sed 's/^MMseqs2 Version: //')
         END_VERSIONS
         """
     stub:
         """
         mkdir Ref_Prot_DB
-        touch versions.yml
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            mmseqs: \$(mmseqs --version 2>&1 | grep -m1 '^MMseqs2 Version:' | sed 's/^MMseqs2 Version: //')
+        END_VERSIONS
         """
 }
