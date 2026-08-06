@@ -41,18 +41,16 @@ process DIAMOND_MAKEDB {
     path "versions.yml", emit: versions
     
     script:
-    """    
-    diamond makedb \\
-        --in ${protein_fasta} \\
-        --db ${db_name} \\
-        --threads ${task.cpus} 
+        """    
+        diamond makedb \\
+            --in ${protein_fasta} \\
+            --db ${db_name} \\
+            --threads ${task.cpus} 
     
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             diamond: \$(diamond --version | sed 's/^.*version //')
         END_VERSIONS
-
-    
         """
     stub:
         """
