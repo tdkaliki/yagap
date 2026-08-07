@@ -8,7 +8,7 @@ include { CREATE_MINIMAP_GTF_LIST } from '../../modules/local/make_file_list/mai
 workflow CDNASEQ_MAPPING {
     take:
         cdna_seq
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         if (params.run_clean_minimap2) {

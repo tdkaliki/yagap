@@ -9,7 +9,7 @@ include { BED_MERGE } from '../../modules/local/bed_merge/main'
 include { BED_MASK } from '../../modules/local/bed_mask/main'
 workflow REPEAT_MASKING {
     take:
-		genome
+        genome
         N
         
     main:

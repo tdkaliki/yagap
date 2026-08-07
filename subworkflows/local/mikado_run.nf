@@ -7,7 +7,7 @@ include { MAKE_RNA_HINTS } from '../../modules/local/make_rna_hints/main'
 workflow MIKADO_RUN {
     take:
         mikado_list
-		genome
+        genome
         scoringfile
         protdb
         protdbfas

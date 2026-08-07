@@ -7,7 +7,7 @@ include { FILTER_METAEUK } from '../../modules/local/filter_metaeuk/main'
 workflow PROTEIN_MAPPING {
     take:
         protein_fa
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         FILTER_PROTEIN(protein_fa)

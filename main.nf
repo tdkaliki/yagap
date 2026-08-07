@@ -1,6 +1,6 @@
 nextflow.enable.dsl=2
 
-include { YAGAP } from "$projectDir/workflows/yagap"
+include { YAGAP } from './workflows/yagap'
 
 workflow MAIN {
     YAGAP ()

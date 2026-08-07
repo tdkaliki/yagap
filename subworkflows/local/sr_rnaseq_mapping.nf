@@ -12,7 +12,7 @@ include { CREATE_HISAT_GTF_LIST } from '../../modules/local/make_file_list/main'
 workflow SR_RNASEQ_MAPPING {
     take:
         sr_rna_seq_reads
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         HISAT2_BUILD(genome)

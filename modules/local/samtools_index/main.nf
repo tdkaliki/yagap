@@ -15,8 +15,7 @@ process SAMTOOLS_INDEX{
         "${task.process}":
             samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
         END_VERSIONS
-        
-	"""
+        """
     stub:
         """
         touch ${bam_file}.bai

@@ -6,7 +6,7 @@ include { COMBINE_AUGUSTUS } from '../../modules/local/combine_augustus/main'
 workflow AUGUSTUS_ANNOTATION {
     take:
         genome
-		training_set
+        training_set
         augustus_hints
         N
     main:

@@ -5,7 +5,7 @@ include { CREATE_GMAP_GFF_LIST } from '../../modules/local/make_file_list/main'
 workflow TRINITY_MAPPING {
     take:
         trinity_fasta
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         GMAP_BUILD(genome)

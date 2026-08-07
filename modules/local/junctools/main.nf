@@ -14,8 +14,7 @@ process JUNCTOOLS{
         "${task.process}":
             junctools: \$(junctools --version)
         END_VERSIONS
-        
-	"""
+        """
     stub:
         """
         touch intron_hints.gff
@@ -25,7 +24,3 @@ process JUNCTOOLS{
         END_VERSIONS
         """    
 }
-
-
-
-

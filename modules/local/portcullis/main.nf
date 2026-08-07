@@ -15,9 +15,7 @@ process PORTCULIS{
         "${task.process}":
             portcullis: \$(portcullis --version| sed 's/^portcullis //')
         END_VERSIONS
-        
-
-	"""
+        """
     stub:
         """
         mkdir -p portcullis_rezults/3-filt

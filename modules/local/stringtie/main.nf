@@ -15,8 +15,7 @@ process STRINGTIE_HISAT{
         "${task.process}":
             stringtie: \$(stringtie --version)
         END_VERSIONS
-
-	"""
+        """
     stub:
         """
         touch ${sample_id}.stringtie.gtf

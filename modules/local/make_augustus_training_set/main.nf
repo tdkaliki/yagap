@@ -1,8 +1,8 @@
 process MAKE_AUGUSTUS_TRAINING_SET {
     label 'make_augustus_training_set'
     input:
-        tuple val(meta), path(mikado_gff)
-        tuple val(meta), path(mikado_metrics)
+        tuple val(meta1), path(mikado_gff)
+        tuple val(meta2), path(mikado_metrics)
     output:
         tuple val('augustus_training_set'), path("Augustus_training.gff"), emit: training_set
         path "versions.yml", emit: versions
@@ -14,7 +14,6 @@ process MAKE_AUGUSTUS_TRAINING_SET {
         "${task.process}":
             python: \$(python3 --version | sed 's/^Python //')
         END_VERSIONS
-    
         """
     stub:
         """

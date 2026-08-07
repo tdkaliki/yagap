@@ -4,7 +4,7 @@ include { JUNCTOOLS } from '../../modules/local/junctools/main'
 workflow GET_JUNCTIONS {
     take:
         bam_file
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         PORTCULIS(bam_file, genome)

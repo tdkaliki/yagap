@@ -16,7 +16,6 @@ process TRANSDECODER {
         "${task.process}":
             TransDecoder: \$(TransDecoder.LongOrfs --version 2>&1 | sed 's/TransDecoder.LongOrfs //')
         END_VERSIONS
-
         """
     stub:
         """

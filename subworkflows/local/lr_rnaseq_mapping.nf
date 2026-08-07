@@ -8,7 +8,7 @@ include { CREATE_MINIMAP_GTF_LIST } from '../../modules/local/make_file_list/mai
 workflow LR_RNASEQ_MAPPING {
     take:
         lr_rna_seq_reads
-		genome
+        genome
     main:
         Channel.empty().set { ch_versions }
         if (params.run_clean_minimap2) {

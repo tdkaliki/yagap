@@ -19,9 +19,7 @@ process SAMTOOLS_MERGE {
         "${task.process}":
             samtools: \$(samtools --version | head -n1 | sed 's/^samtools //')
         END_VERSIONS
-        
-
-	"""
+        """
     stub:
         """
         touch ${meta}.merged.bam

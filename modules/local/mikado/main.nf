@@ -2,11 +2,11 @@ process MIKADO_CONFIGURE {
     label 'mikado_configure'
     container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
-        tuple val(meta), path(mikado_list)
+        tuple val(meta1), path(mikado_list)
         path genome
         val scoringfile
         path protdb
-        tuple val(meta), path(junctions)
+        tuple val(meta2), path(junctions)
     output:
         tuple val('mikado_configuration'), path("mikado_configuration.yaml"), emit: mikado_configuration
         tuple val('mikado_configuration'), path("scoring_copy.yaml"), emit: mikado_scoring_copy
@@ -37,15 +37,15 @@ process MIKADO_PREPARE {
     label 'mikado_prepare'
     container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
-        tuple val(meta), path(mikado_list)
-        tuple val(meta), path(mikado_configuration)
-        tuple val(meta), path(mikado_scoring_copy)
+        tuple val(meta1), path(mikado_list)
+        tuple val(meta2), path(mikado_configuration)
+        tuple val(meta3), path(mikado_scoring_copy)
         path genome
         path protdb
-        tuple val(meta), path(junctions)    
+        tuple val(meta4), path(junctions)    
     output:
         tuple val('mikado_prepare'), path("mikado_prepared.fasta"), emit: mikado_prepared
-	tuple val('mikado_prepare'), path("mikado_prepared.gtf"), emit: mikado_prepared_gtf
+        tuple val('mikado_prepare'), path("mikado_prepared.gtf"), emit: mikado_prepared_gtf
         path "versions.yml", emit: versions
     script:
         """
@@ -71,15 +71,15 @@ process MIKADO_SERIALISE {
     label 'mikado_serialise'
     container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
-        tuple val(meta), path(mikado_list)
+        tuple val(meta1), path(mikado_list)
         path genome
-        tuple val(meta), path(mikado_scoring_copy)
-        tuple val(meta), path(mikado_configuration)
-        tuple val(meta), path(diamond_res)
-        tuple val(meta), path(transdecoder_res)
+        tuple val(meta2), path(mikado_scoring_copy)
+        tuple val(meta3), path(mikado_configuration)
+        tuple val(meta4), path(diamond_res)
+        tuple val(meta5), path(transdecoder_res)
         path protdbfas
-        tuple val(meta), path(mikado_prepared)
-        tuple val(meta), path(junctions)
+        tuple val(meta6), path(mikado_prepared)
+        tuple val(meta7), path(junctions)
     output:
         tuple val('mikado_serialise'), path("mikado.db"), emit: mikado_serialise_res
         path "versions.yml", emit: versions
@@ -91,7 +91,6 @@ process MIKADO_SERIALISE {
         "${task.process}":
             mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
-        
         """
     stub:
         """
@@ -107,29 +106,28 @@ process MIKADO_PICK {
     label 'mikdo_pick'
     container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
     input:
-        tuple val(meta), path(mikado_list)
+        tuple val(meta1), path(mikado_list)
         path genome
         //path protdb
-        tuple val(meta), path(junctions)
-        tuple val(meta), path(mikado_configuration)
-        tuple val(meta), path(mikado_serialise_res)
-        tuple val(meta), path(mikado_scoring_copy)
-        tuple val(meta), path(mikado_prepared)
-	tuple val(meta), path(mikado_prepared_gtf)
+        tuple val(meta2), path(junctions)
+        tuple val(meta3), path(mikado_configuration)
+        tuple val(meta4), path(mikado_serialise_res)
+        tuple val(meta5), path(mikado_scoring_copy)
+        tuple val(meta6), path(mikado_prepared)
+        tuple val(meta7), path(mikado_prepared_gtf)
     output:
         tuple val('mikado_loci_gff'), path("mikado.loci.gff3"), emit: mikado_gff
         tuple val('mikado_loci_metrics'), path("mikado.loci.metrics.tsv"), emit: mikado_metrics
         path "versions.yml", emit: versions
     script:
-    """
+        """
         mikado pick --procs ${task.cpus} --json-conf ${mikado_configuration} --subloci-out mikado.subloci.gff3
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             mikado: \$(mikado --version| sed 's/^Mikado //')
         END_VERSIONS
-
-    """
+        """
     stub:
         """
         touch mikado.loci.gff3
