@@ -4,7 +4,7 @@ process HISAT2_BUILD{
     input:
         path genome
     output:
-        path "${genome.baseName}.hisat2_index.*" ,emit:hisat2_index
+        tuple val("${genome.baseName}.hisat2_index"), path("${genome.baseName}.hisat2_index.*"), emit: hisat2_index
         path "versions.yml", emit: versions
     script:
         """
