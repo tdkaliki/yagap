@@ -25,6 +25,7 @@ process AUGUSTUS_TRAINING {
         """
     stub:
         """
+        mkdir -p augustus_config/species/${specname}
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             augustus: \$(augustus --version 2>&1 | head -n1 | grep -oP '\\d+\\.\\d+\\.\\d+')
