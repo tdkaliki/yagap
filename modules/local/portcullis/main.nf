@@ -11,18 +11,20 @@ process PORTCULIS{
         """
         portcullis full -t ${task.cpus} -v --bam_filter --orientation FR -o portcullis_rezults ${genome} ${bam_file}
 
+        VERSION=\$(portcullis --version 2>/dev/null | sed 's/^portcullis //') || VERSION="1.2.4"
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            portcullis: \$(portcullis --version| sed 's/^portcullis //')
+            portcullis: \$VERSION
         END_VERSIONS
         """
     stub:
         """
         mkdir -p portcullis_rezults/3-filt
         touch portcullis_rezults/3-filt/portcullis_filtered.pass.junctions.bed
+        VERSION=\$(portcullis --version 2>/dev/null | sed 's/^portcullis //') || VERSION="1.2.4"
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            portcullis: \$(portcullis --version| sed 's/^portcullis //')
+            portcullis: \$VERSION
         END_VERSIONS
         """
 }
