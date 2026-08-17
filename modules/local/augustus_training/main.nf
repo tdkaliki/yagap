@@ -11,6 +11,9 @@ process AUGUSTUS_TRAINING {
         path "versions.yml", emit: versions
     script:
         """
+        export AUGUSTUS_CONFIG_PATH="\${PWD}/augustus_config"
+        cp -r /usr/local/config "\${AUGUSTUS_CONFIG_PATH}"
+
         mkdir Augustus_training
         autoAugTrain.pl --trainingset=${trainingset} --genome=${genome} --species=${specname} --workingdir=Augustus_training --optrounds=2 --verbose
 
