@@ -7,7 +7,7 @@ process MAKE_RNA_HINTS {
         path "versions.yml", emit: versions
     script:
         """
-        python mikado_to_hints.py ${mikado_gff}
+        mikado_to_hints.py ${mikado_gff}
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

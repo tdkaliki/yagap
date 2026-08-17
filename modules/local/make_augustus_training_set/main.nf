@@ -8,7 +8,7 @@ process MAKE_AUGUSTUS_TRAINING_SET {
         path "versions.yml", emit: versions
     script:
         """
-        python mikado_to_training_set.py ${mikado_metrics} ${mikado_gff}
+        mikado_to_training_set.py ${mikado_metrics} ${mikado_gff}
         
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

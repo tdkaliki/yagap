@@ -8,7 +8,7 @@ process FILTER_METAEUK{
         path "versions.yml", emit: versions
     script:
         """
-        python filter_metaeuk_results.py ${gff}
+        filter_metaeuk_results.py ${gff}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import sys
 
 inputf=sys.argv[1]

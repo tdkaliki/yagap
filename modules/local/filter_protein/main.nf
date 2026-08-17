@@ -8,7 +8,7 @@ process FILTER_PROTEIN{
         path "versions.yml", emit: versions
     script:
         """
-        python filter_extended_alphabet.py ${fasta}
+        filter_extended_alphabet.py ${fasta}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

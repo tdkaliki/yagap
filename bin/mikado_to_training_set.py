@@ -31,8 +31,8 @@ with open(args.metrics) as mtr:
                 genes.add(gid)
             #print gid,blastCov,hasStart,hasStop,nbExon
 
-print "{0} transcrits and {1} genes selected!".format(len(training),len(genes))
-print list(training)[0:5]
+print("{0} transcrits and {1} genes selected!".format(len(training),len(genes)))
+print(list(training)[0:5])
 
 added=set()
 with open('Augustus_training.gff','w') as tgf:
@@ -41,7 +41,7 @@ with open('Augustus_training.gff','w') as tgf:
         scaf,source,feat,start,end,score,strand,phase,attributes=line.rstrip().split('\t')
         att=parseAtt(attributes)
         if feat=='mRNA':
-            print att['ID'],att['ID'] in training
+            print(att['ID'],att['ID'] in training)
             if att['ID'] in training:
                 tgf.write(line)
         elif feat=='exon' or feat=='CDS':
