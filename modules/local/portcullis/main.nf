@@ -9,22 +9,21 @@ process PORTCULIS{
         path "versions.yml", emit: versions
     script:
         """
-        portcullis full -t ${task.cpus} -v --bam_filter --orientation FR -o portcullis_rezults ${genome} ${bam_file}
-
-        VERSION=\$(portcullis --version 2>/dev/null | sed 's/^portcullis //') || VERSION="1.2.4"
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            portcullis: \$VERSION
+            portcullis: \$(portcullis --version| sed 's/^portcullis //')
         END_VERSIONS
+
+        portcullis full -t ${task.cpus} -v --bam_filter --orientation FR -o portcullis_rezults ${genome} ${bam_file}
+
         """
     stub:
         """
         mkdir -p portcullis_rezults/3-filt
         touch portcullis_rezults/3-filt/portcullis_filtered.pass.junctions.bed
-        VERSION=\$(portcullis --version 2>/dev/null | sed 's/^portcullis //') || VERSION="1.2.4"
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            portcullis: \$VERSION
+            portcullis: \$(portcullis --version| sed 's/^portcullis //')
         END_VERSIONS
         """
 }
