@@ -7,7 +7,7 @@ process AUGUSTUS_TRAINING {
         val specname
 
     output:
-        val specname, emit: specname
+        tuple val(specname), path (augustus_config), emit: species_model
         path "versions.yml", emit: versions
     script:
         """

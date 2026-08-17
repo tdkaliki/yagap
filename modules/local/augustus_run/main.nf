@@ -3,7 +3,7 @@ process AUGUSTUS_RUN {
     container 'https://depot.galaxyproject.org/singularity/augustus%3A3.5.0--pl5321h9716f88_9'
     input:
         tuple val(meta), path(augustus_hints)
-        val specname
+        tuple val(specname), path (augustus_config)
         tuple val(genome_id), path(genome)
 
     output:
@@ -11,6 +11,7 @@ process AUGUSTUS_RUN {
         path "versions.yml", emit: versions
     script:
         """
+        cp -r /usr/local/config ${augustus_config}
         augustus --uniqueGeneId=true --species=${specname} --hintsfile=${augustus_hints} --extrinsicCfgFile=my_extrinsic.cfg --exonnames=on --codingseq=on --allow_hinted_splicesites=gcag,atac --alternatives-from-evidence=false --softmasking=true --gff3=on ${genome} > ${genome_id}.aug.out
 
         cat <<-END_VERSIONS > versions.yml
