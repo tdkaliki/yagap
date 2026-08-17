@@ -27,7 +27,7 @@ workflow MIKADO_RUN {
         //MIKADO_PICK(mikado_list, genome, protdb, junctions, MIKADO_CONFIGURE.out.mikado_configuration, MIKADO_SERIALISE.out.mikado_serialise_res, MIKADO_CONFIGURE.out.mikado_scoring_copy, MIKADO_PREPARE.out.mikado_prepared, MIKADO_PREPARE.out.mikado_prepared_gtf)
         MIKADO_PICK(mikado_list, genome, junctions, MIKADO_CONFIGURE.out.mikado_configuration, MIKADO_SERIALISE.out.mikado_serialise_res, MIKADO_CONFIGURE.out.mikado_scoring_copy, MIKADO_PREPARE.out.mikado_prepared, MIKADO_PREPARE.out.mikado_prepared_gtf)
         ch_versions = ch_versions.mix(MIKADO_PICK.out.versions)
-        MAKE_AUGUSTUS_TRAINING_SET(MIKADO_PICK.out.mikado_metrics, MIKADO_PICK.out.mikado_gff)
+        MAKE_AUGUSTUS_TRAINING_SET(MIKADO_PICK.out.mikado_gff, MIKADO_PICK.out.mikado_metrics)
         ch_versions = ch_versions.mix(MAKE_AUGUSTUS_TRAINING_SET.out.versions)
         MAKE_RNA_HINTS(MIKADO_PICK.out.mikado_gff)
         ch_versions = ch_versions.mix(MAKE_RNA_HINTS.out.versions)
