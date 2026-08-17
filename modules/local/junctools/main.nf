@@ -1,6 +1,5 @@
 process JUNCTOOLS{
     label 'junctools'
-    //container 'https://depot.galaxyproject.org/singularity/portcullis%3A1.2.4--py312hdf7dc61_5'
     container 'https://depot.galaxyproject.org/singularity/portcullis%3A1.2.3--py39h66ddb4a_0'
     input:
         tuple val(meta_info), path(junctions_bed)
