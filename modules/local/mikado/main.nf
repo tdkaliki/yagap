@@ -1,6 +1,7 @@
 process MIKADO_CONFIGURE {
     label 'mikado_configure'
-    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    //container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.3--py39h919a90d_1'
     input:
         tuple val(meta1), path(mikado_list)
         path genome
@@ -35,7 +36,8 @@ process MIKADO_CONFIGURE {
 
 process MIKADO_PREPARE {
     label 'mikado_prepare'
-    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    //container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.3--py39h919a90d_1'
     input:
         tuple val(meta1), path(mikado_list)
         tuple val(meta2), path(mikado_configuration)
@@ -69,7 +71,8 @@ process MIKADO_PREPARE {
 
 process MIKADO_SERIALISE {
     label 'mikado_serialise'
-    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    //container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.3--py39h919a90d_1'
     input:
         tuple val(meta1), path(mikado_list)
         path genome
@@ -104,7 +107,8 @@ process MIKADO_SERIALISE {
 
 process MIKADO_PICK {
     label 'mikdo_pick'
-    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    //container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.5rc3--py311h9a48388_1'
+    container 'https://depot.galaxyproject.org/singularity/mikado%3A2.3.3--py39h919a90d_1'
     input:
         tuple val(meta1), path(mikado_list)
         path genome
