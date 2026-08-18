@@ -10,7 +10,8 @@ workflow TRINITY_MAPPING {
         Channel.empty().set { ch_versions }
         GMAP_BUILD(genome)
         ch_versions = ch_versions.mix(GMAP_BUILD.out.versions)
-        GMAP_MAPPING(trinity_fasta, GMAP_BUILD.out.gmapdb, GMAP_BUILD.out.genomedb)
+        //GMAP_MAPPING(trinity_fasta, GMAP_BUILD.out.gmapdb, GMAP_BUILD.out.genomedb)
+        GMAP_MAPPING(trinity_fasta, GMAP_BUILD.out.gmapdb)
         ch_versions = ch_versions.mix(GMAP_MAPPING.out.versions)
         gmap_gffs=GMAP_MAPPING.out.gff.map { sample_id, file_path -> file_path }.collect().map { file_paths -> ['trinity',file_paths] }
         CREATE_GMAP_GFF_LIST(gmap_gffs)

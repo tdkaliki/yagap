@@ -5,7 +5,7 @@ process GMAP_BUILD{
         path genome
     output:
         path "gmapdb" ,emit:gmapdb
-        path "Genome" ,emit:genomedb
+        //path "Genome" ,emit:genomedb
         path "versions.yml", emit: versions
     script:
         """
@@ -18,8 +18,7 @@ process GMAP_BUILD{
         """
     stub:
         """
-        mkdir gmapdb
-        mkdir Genome
+        mkdir -p gmapdb/Genome
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             gmap: \$(gmap --version)
