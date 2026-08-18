@@ -5,16 +5,14 @@ process AUGUSTUS_RUN {
         tuple val(meta), path(augustus_hints)
         tuple val(specname), path (augustus_config)
         tuple val(genome_id), path(genome)
-
+        path extrinsic_cfg
     output:
         tuple val(genome_id), path("${genome_id}.aug.out"), emit:augustus_out
         path "versions.yml", emit: versions
     script:
         """
         export AUGUSTUS_CONFIG_PATH=${augustus_config}
-        #augustus --uniqueGeneId=true --species=${specname} --hintsfile=${augustus_hints} --extrinsicCfgFile=my_extrinsic.cfg --exonnames=on --codingseq=on --allow_hinted_splicesites=gcag,atac --alternatives-from-evidence=false --softmasking=true --gff3=on ${genome} > ${genome_id}.aug.out
-
-        augustus --uniqueGeneId=true --species=${specname} --hintsfile=${augustus_hints} --exonnames=on --codingseq=on --allow_hinted_splicesites=gcag,atac --alternatives-from-evidence=false --softmasking=true --gff3=on ${genome} > ${genome_id}.aug.out
+        augustus --uniqueGeneId=true --species=${specname} --hintsfile=${augustus_hints} --extrinsicCfgFile=${extrinsic_cfg} --exonnames=on --codingseq=on --allow_hinted_splicesites=gcag,atac --alternatives-from-evidence=false --softmasking=true --gff3=on ${genome} > ${genome_id}.aug.out
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":

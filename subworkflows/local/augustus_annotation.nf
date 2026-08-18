@@ -21,7 +21,8 @@ workflow AUGUSTUS_ANNOTATION {
             def chunk_id = chunk_file.name.replaceAll(/.*_part_(\d+)$/, '$1')
             ["chunk_${chunk_id}", chunk_file]
         }
-        AUGUSTUS_RUN(augustus_hints, AUGUSTUS_TRAINING.out.species_model, genome_chunks)
+        extrinsic_cfg=Channel.fromPath(params.augustus_extrinsic_cfg, checkIfExists: true)
+        AUGUSTUS_RUN(augustus_hints, AUGUSTUS_TRAINING.out.species_model, genome_chunks, extrinsic_cfg)
         ch_versions = ch_versions.mix(AUGUSTUS_RUN.out.versions)
         augustus_res=AUGUSTUS_RUN.out.augustus_out.map { genome_id, file_path -> file_path }.collect().map { file_paths -> ['augustus_results',file_paths] }
         COMBINE_AUGUSTUS(augustus_res, genome)
