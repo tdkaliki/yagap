@@ -13,7 +13,7 @@ process COMBINE_AUGUSTUS {
         """
         cat *.aug.out > Augustus_res.txt
 
-        grep "  AUGUSTUS        " Augustus_res.txt > augustus_res.gff
+        grep "\tAUGUSTUS\t" Augustus_res.txt > augustus_res.gff
 
         gffread augustus_res.gff -E -T -C -V -g ${genome} -o augustus_genes.gtf
 
