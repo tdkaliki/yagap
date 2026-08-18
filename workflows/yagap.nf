@@ -10,21 +10,29 @@ include { COMBINE_HINTS } from '../modules/local/combine_hints'
 include { AUGUSTUS_ANNOTATION } from '../subworkflows/local/augustus_annotation'
 include { REPEAT_MASKING } from '../subworkflows/local/repeat_masking'
 include { DIAMOND_MAKEDB } from '../modules/local/diamond/main'
-include { softwareVersionsToYAML} from "../subworkflows/local/utils"
-
+include { softwareVersionsToYAML} from '../subworkflows/local/utils'
+include {TRINITY_ASSEMBLY} from '../modules/local/trinity/main'
 workflow YAGAP {
     main:
     mikado_gtf_list = Channel.empty()
     augustus_hints = Channel.empty()
     ch_versions = Channel.empty()
 ///
-    if (params.run_trinity_mapping) {
-        trinity_fa=Channel
-            .fromPath(params.trinity_files, checkIfExists: true)
+    if (params.run_trinity_mapping) {//rework this part to be more flexible, so that it can accept multiple trinity fasta files
+        sr_rna_seq_reads0=Channel
+            .fromPath(params.sr_rnaseq_reads, checkIfExists: true)
             .splitCsv(sep: '\t', header: true)
             .map { row -> 
-                [row.sample_id, file(row.trinity_fasta)]
+                [row.sample_id, file(row.read1), file(row.read2)]
             }
+        TRINITY_ASSEMBLY(sr_rna_seq_reads0)
+        trinity_fa=TRINITY_ASSEMBLY.out.trinity_assembly
+        //trinity_fa=Channel
+        //    .fromPath(params.trinity_files, checkIfExists: true)
+        //    .splitCsv(sep: '\t', header: true)
+        //    .map { row -> 
+        //        [row.sample_id, file(row.trinity_fasta)]
+        //    }
         TRINITY_MAPPING(trinity_fa, params.genome)
         mikado_gtf_list = mikado_gtf_list.mix(TRINITY_MAPPING.out.gmap_list)
         ch_versions = ch_versions.mix(TRINITY_MAPPING.out.versions)
