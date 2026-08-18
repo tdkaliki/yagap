@@ -13,7 +13,7 @@ process GMAP_BUILD{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            gmap: \$(gmap --version)
+            gmap: \$(gmap --version 2>&1 | grep -oP 'version \K[\d-]+')
         END_VERSIONS
         """
     stub:
@@ -21,7 +21,7 @@ process GMAP_BUILD{
         mkdir -p gmapdb/Genome
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            gmap: \$(gmap --version)
+            gmap: \$(gmap --version 2>&1 | grep -oP 'version \K[\d-]+')
         END_VERSIONS
         """    
 }
