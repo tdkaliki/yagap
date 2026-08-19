@@ -7,7 +7,7 @@ process TRINITY_ASSEMBLY{
         tuple val(meta), path(reads_1), path(reads_2)
 
     output:
-        tuple val(meta), path("${meta}_Trinity.fasta"), emit: trinity_assembly
+        tuple val(meta), path("${meta}.Trinity.fasta"), emit: trinity_assembly
         path "versions.yml", emit: versions
 
     script:
@@ -24,7 +24,15 @@ process TRINITY_ASSEMBLY{
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
-            trinity: \$(Trinity --version | grep -oP 'Trinity-v\\S+' | sed 's/Trinity-v//')
+            trinity: \$(Trinity --version | grep -oP 'Trinity-v\\S+' | head -n1 | sed 's/Trinity-v//')
+        END_VERSIONS
+        """
+    stub:
+        """
+        touch ${meta}.Trinity.fasta
+        cat <<-END_VERSIONS > versions.yml
+        "${task.process}":
+            trinity: \$(Trinity --version | grep -oP 'Trinity-v\\S+' | head -n1 | sed 's/Trinity-v//')
         END_VERSIONS
         """
 }

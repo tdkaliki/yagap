@@ -1,6 +1,6 @@
 process FILTER_PROTEIN{
     label 'filter_protein'
-    
+    container 'https://depot.galaxyproject.org/singularity/biopython%3A1.84'
     input:
         path fasta
     output:
