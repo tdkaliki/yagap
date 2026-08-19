@@ -4,7 +4,7 @@ process METAEUK_DB{
     input:
         path genome
     output:
-        path "Genome.DB" ,emit:genome_db
+        path "Genome.DB*" ,emit:genome_db
         path "versions.yml", emit: versions
     script:
         """
