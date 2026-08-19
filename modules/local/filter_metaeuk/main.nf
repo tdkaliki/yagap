@@ -4,7 +4,7 @@ process FILTER_METAEUK{
     input:
         path gff
     output:
-        tuple val("protei_hints"), path("protei_hints.gff"),emit:intron_hints
+        tuple val("protein_hints"), path("protein_hints.gff"),emit:intron_hints
         path "versions.yml", emit: versions
     script:
         """
@@ -17,7 +17,7 @@ process FILTER_METAEUK{
         """
     stub:
         """
-        touch protei_hints.gff
+        touch protein_hints.gff
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             python: \$(python3 --version | sed 's/^Python //')
