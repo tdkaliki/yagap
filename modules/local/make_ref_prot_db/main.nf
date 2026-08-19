@@ -15,7 +15,8 @@ process MAKE_REF_PROT_DB{
         mmseqs createsubdb Ref_Prot_clust_DB Ref_Prot_DB Ref_Prot_RepDb
         mmseqs createsubdb Ref_Prot_clust_DB Ref_Prot_DB_h Ref_Prot_RepDb_h
         mmseqs result2profile Ref_Prot_RepDb Ref_Prot_DB Ref_Prot_clust_DB Ref_Prot_ProfileDb
-
+        cd ../
+        
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             mmseqs: \$(mmseqs --version 2>&1 | grep -m1 '^MMseqs2 Version:' | sed 's/^MMseqs2 Version: //')
