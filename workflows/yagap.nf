@@ -25,14 +25,17 @@ workflow YAGAP {
             .map { row -> 
                 [row.sample_id, file(row.read1), file(row.read2)]
             }
-        TRINITY_ASSEMBLY(sr_rna_seq_reads0)
-        trinity_fa=TRINITY_ASSEMBLY.out.trinity_assembly
+        //TRINITY_ASSEMBLY(sr_rna_seq_reads0)
+        //trinity_fa=TRINITY_ASSEMBLY.out.trinity_assembly
         //trinity_fa=Channel
         //    .fromPath(params.trinity_files, checkIfExists: true)
         //    .splitCsv(sep: '\t', header: true)
         //    .map { row -> 
         //        [row.sample_id, file(row.trinity_fasta)]
         //    }
+        trinity_fa=Channel
+            .fromPath('/data/scratch/qp24520/work/a6/2f62563afe73a1013dba599ebc6ca2/trinity_out.Trinity.fasta')
+            .map { fasta -> ['combine_gtfs_for_mikado', fasta] }
         TRINITY_MAPPING(trinity_fa, params.genome)
         mikado_gtf_list = mikado_gtf_list.mix(TRINITY_MAPPING.out.gmap_list)
         ch_versions = ch_versions.mix(TRINITY_MAPPING.out.versions)

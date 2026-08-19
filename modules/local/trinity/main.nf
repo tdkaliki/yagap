@@ -18,8 +18,9 @@ process TRINITY_ASSEMBLY{
             --left ${reads_1} \\
             --right ${reads_2} \\
             --CPU ${task.cpus} \\
-            --output trinity_out
-        mv trinity_out/Trinity.fasta ${meta}_Trinity.fasta
+            --full_cleanup \\
+            --output ${meta}
+        ${meta}.Trinity.fasta
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
