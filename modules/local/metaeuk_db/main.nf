@@ -4,7 +4,7 @@ process METAEUK_DB{
     input:
         path genome
     output:
-        path "Genome.DB*" ,emit:genome_db
+        tuple val("Genome.DB"), path("Genome.DB*") ,emit:genome_db
         path "versions.yml", emit: versions
     script:
         """
@@ -18,6 +18,13 @@ process METAEUK_DB{
     stub:
         """
         touch Genome.DB
+        touch Genome.DB.dbtype
+        touch Genome.DB_h
+        touch Genome.DB_h.dbtype
+        touch Genome.DB_h.index
+        touch Genome.DB.index
+        touch Genome.DB.lookup
+        touch Genome.DB.source
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
             metaeuk: \$(metaeuk --version 2>&1 | grep -m1 '^metaeuk Version:' | sed 's/^metaeuk Version: //')

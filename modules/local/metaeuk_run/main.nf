@@ -3,7 +3,7 @@ process METAEUK_RUN{
     container 'https://depot.galaxyproject.org/singularity/metaeuk%3A7.bba0d80--pl5321hd6d6fdc_2'
     input:
         path fasta
-        path genome_db
+        tuple val(gb_name), path (genome_db)
         path ref_prot_db
         val max_intron
     output:
@@ -11,7 +11,7 @@ process METAEUK_RUN{
         path "versions.yml", emit: versions
     script:
         """
-        metaeuk easy-predict ${genome_db} ${ref_prot_db}/Ref_Prot_ProfileDb metaeuk_res tmp/ --threads ${task.cpus} --max-intron ${max_intron}
+        metaeuk easy-predict ${gb_name} ${ref_prot_db}/Ref_Prot_ProfileDb metaeuk_res tmp/ --threads ${task.cpus} --max-intron ${max_intron}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
