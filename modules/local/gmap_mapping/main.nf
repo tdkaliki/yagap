@@ -11,7 +11,6 @@ process GMAP_MAPPING{
         path "versions.yml", emit: versions
     script:
         """
-        #gmap -D ${gmapdb} -d ${genomedb} -f 3 -n 0 -x 50 -t 10 -B 4 --gff3-add-separators=0 ${fasta} > ${sample_id}.gff3
         gmap -D ${gmapdb} -d Genome -f 3 -n 0 -x 50 -t 10 -B 4 --gff3-add-separators=0 ${fasta} > ${sample_id}.gff3
 
         cat <<-END_VERSIONS > versions.yml
