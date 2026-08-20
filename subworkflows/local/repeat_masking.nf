@@ -23,9 +23,10 @@ workflow REPEAT_MASKING {
         genome_chunks = SPLIT_GENOME.out.genome_chunks.flatten()
         chunks_standard_model=rm_species.combine(genome_chunks)
 
-        REPEATMASKER_STANDARD(chunks_standard_model)//output val, gff
-        ch_versions = ch_versions.mix(REPEATMASKER_STANDARD.out.versions)
-        rm_standard_gffs=REPEATMASKER_STANDARD.out.repeat_gff.groupTuple()
+        //tmp need to find how to generate the standart db for REPEATMASKER
+        //REPEATMASKER_STANDARD(chunks_standard_model)//output val, gff
+        //ch_versions = ch_versions.mix(REPEATMASKER_STANDARD.out.versions)
+        //rm_standard_gffs=REPEATMASKER_STANDARD.out.repeat_gff.groupTuple()
         
         if (params.run_maskin_with_model){
 
@@ -39,10 +40,13 @@ workflow REPEAT_MASKING {
             REPEATMASKER_WITH_MODEL(chunks_with_model)//output val, gff
             ch_versions = ch_versions.mix(REPEATMASKER_WITH_MODEL.out.versions)
             rm_withmodel_gffs=REPEATMASKER_WITH_MODEL.out.repeat_gff.groupTuple()
-            rm_gffs=rm_standard_gffs.mix(rm_withmodel_gffs)
+            //tmp turn off
+            //rm_gffs=rm_standard_gffs.mix(rm_withmodel_gffs)
+            rm_gffs=rm_withmodel_gffs
         }
         else{
-            rm_gffs=rm_standard_gffs
+            //tmp turn off
+            //rm_gffs=rm_standard_gffs
         }
 
         COMBINE_GFFS(rm_gffs)
