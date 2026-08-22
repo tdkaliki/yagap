@@ -10,8 +10,8 @@ process REPEATMASKER_WITH_MODEL {
     
     script:
         """
-        #RepeatMasker -nolow -norna -pa 3 -gff -xsmall -lib ${model} ${genome}
-        RepeatMasker -famdb_dir '' -nolow -norna -pa 3 -gff -xsmall -lib ${model} ${genome}
+        #RepeatMasker -nolow -norna -pa ${task.cpus} -gff -xsmall -lib ${model} ${genome}
+        RepeatMasker -famdb_dir '' -nolow -norna -pa ${task.cpus} -gff -xsmall -lib ${model} ${genome}
 
         cat <<-END_VERSIONS > versions.yml
         "${task.process}":
