@@ -50,7 +50,7 @@ workflow REPEAT_MASKING {
         }
 
         COMBINE_GFFS(rm_gffs)
-        big_rm_gffs=COMBINE_GFFS.out.gff
+        //big_rm_gffs=COMBINE_GFFS.out.gff
         if(params.run_ltr_finder){
             LTR_FINDER(genome)//output val, gff
             ch_versions = ch_versions.mix(LTR_FINDER.out.versions)
